@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Scheduling Website</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header>
+		<h1>Welcome to the Scheduling Website</h1>
+	</header>
+	<nav>
+		<ul>
+      <%= link_to "Sign up", new_user_registration_path %>
+			<%= link_to 'Sign In', new_user_session_path %>
+		</ul>
+	</nav>
+	<main>
+		<p>Manage your schedules efficiently and effectively.</p>
+	</main>
+	<footer>
+		<p>&copy; 2023 Scheduling Website</p>
+	</footer>
+</body>
+</html>

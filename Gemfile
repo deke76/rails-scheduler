@@ -79,3 +79,5 @@ gem "devise", "~> 4.9"
 gem "bootstrap", "~> 5.3"
 
 gem "bootstrap_form", "~> 5.4"
+
+gem "inline_svg", "~> 1.9"

@@ -1,5 +1,5 @@
 <div class="position-fixed start-0 end-0 d-flex align-items-end justify-content-end px-4 py-3 z-index-1 pointer-events-none">
-  <div data-controller="hello" class="w-100 shadow-lg rounded px-3 py-2 rounded position-relative border-start border-4 text-white pointer-events-auto <%= flash_class(level) %>">
+  <div data-controller="alert" class="w-100 shadow-lg rounded px-3 py-2 rounded position-relative border-start border-4 text-white pointer-events-auto <%= flash_class(level) %>">
     <div class="p-2">
       <div class="d-flex align-items-start">
         <div class="ms-3 w-0 flex-grow-1 pt-1">
@@ -7,11 +7,7 @@
             <%= content %>
           </p>
         </div>
-        <div class="ms-4 flex-shrink-0 d-flex">
-          <button class="d-inline-flex text-white focus-shadow-none text-decoration-none  transition ease-in-out duration-150">
-            <%= inline_svg_tag 'close.svg', class: 'h-4 w-4 inline-block' %>
-          </button>
-        </div>
+
       </div>
     </div>
   </div>

@@ -1,0 +1,14 @@
+<nav class="navbar bg-light">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="navbar-brand ps-3">
+      <%= link_to root_path do %>
+        <%= inline_svg_tag 'scheduler-icon.svg', class: 'v-100 h-100' %>
+      <% end %>
+    </div>
+    <% if user_signed_in? %>
+      <%= render "nav/authenticated" %>
+    <% else %>
+      <%= render "nav/unauthenticated" %>
+    <% end %>
+  </div>
+</nav>

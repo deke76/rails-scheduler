@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :teams
   devise_for :users
   
   resource :example, constraints: -> { Rails.env.development? }

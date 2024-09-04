@@ -82,4 +82,6 @@ Rails.application.configure do
   # Configure Redis for session storage
   config.session_store :redis_session_store, key: "_sessions_development", compress: true, pool_size: 5, expire_after: 1.year
 
+  # Configure web_console in development
+  config.web_console.permissions = '192.168.65.1'
 end

@@ -1,0 +1,57 @@
+<%= form_with(model: address) do |form| %>
+  <% if address.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
+
+      <ul>
+        <% address.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mt-4 mx-auto w-75">
+    <div class="bg-white py-4 px-4 shadow rounded">
+      <%= bootstrap_form_for(@address) do |form| %>
+        <div class="form-group">
+          <%= form.text_field :name, floating: true %>
+        </div>
+        <div class="row">
+          <div class="col form-group">
+            <%= form.text_field :unit_number, label: "Unit", floating: true %>
+          </div>
+          <div class="col form-group">
+            <%= form.text_field :street_number, label: "Number", floating: true %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= form.text_field :street, floating: true %>
+        </div>       
+
+        <div class="row">
+          <div class="col form-group">
+            <%= form.text_field :city, floating: true %>
+          </div>
+          <div class="col form-group">
+            <%= form.text_field :province, floating: true %>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col form-group">
+            <%= form.text_field :country_name, label: "Country", floating: true %>
+          </div> 
+          <div class="col form-group">
+            <%= form.text_field :postal_code, floating: true %>
+          </div>
+        </div>
+
+        <div class="text-end">
+          <%= form.submit %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

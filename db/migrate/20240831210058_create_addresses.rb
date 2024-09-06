@@ -1,6 +1,6 @@
 class CreateAddresses < ActiveRecord::Migration[7.1]
   def change
-    create_table :addresses do |t|
+    create_table :addresses, id: :uuid do |t|
 
       t.timestamps
     end

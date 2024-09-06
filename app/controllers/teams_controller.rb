@@ -21,7 +21,15 @@ class TeamsController < ApplicationController
 
   # POST /teams or /teams.json
   def create
-    @team = Team.new(team_params)
+    @member = Membership.create(
+      user_id: current_user.id,
+      role: :admin
+    )
+    puts "@member: #{@member.inspect}"
+    # @team = Team.new(team_params)
+    puts "/teams @team: #{@team.inspect}"
+    puts "current_user: #{current_user}"
+    # @team.user_id = current_user
 
     respond_to do |format|
       if @team.save

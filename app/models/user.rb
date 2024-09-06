@@ -5,5 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :memberships
-  has_many :users, through: :memberships
+  has_many :teams, through: :memberships
 end

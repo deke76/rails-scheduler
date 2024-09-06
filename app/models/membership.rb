@@ -1,12 +1,11 @@
 class Membership < ApplicationRecord
-  # belongs_to :user
-  # belongs_to :account
+  belongs_to :user
   
-  # enum role: { owner: 0, admin: 1, member: 2 }
+  enum role: { owner: 0, admin: 1, player: 2 }
 
-  # validates :user_id, uniqueness: { scope: :account_id, message: "is already a member of this account" }
+  # validates :user_id, uniqueness: { scope: [:team_id, :role], message: "is already assigned to this role in the team" }
 
-  # scope :admins, -> { where(role: :admin) }
-  # scope :players, -> { where(role: :player) }
+  scope :admins, -> { where(role: :admin) }
+  scope :players, -> { where(role: :player) }
 end
 

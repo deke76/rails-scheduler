@@ -21,18 +21,11 @@ class TeamsController < ApplicationController
 
   # POST /teams or /teams.json
   def create
-    @member = Membership.create(
-      user_id: current_user.id,
-      role: :admin
-    )
-    puts "@member: #{@member.inspect}"
-    # @team = Team.new(team_params)
-    puts "/teams @team: #{@team.inspect}"
-    puts "current_user: #{current_user}"
-    # @team.user_id = current_user
+    @team = Team.new(team_params)
 
     respond_to do |format|
       if @team.save
+        @membership = Membership.create!(user_id: current_user.id, team_id: @team.id, role: :owner)
         format.html { redirect_to team_url(@team), notice: "Team was successfully created." }
         format.json { render :show, status: :created, location: @team }
       else

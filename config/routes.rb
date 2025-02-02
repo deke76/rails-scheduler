@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :addresses
   resources :teams
   devise_for :users
-  
+
   resource :example, constraints: -> { Rails.env.development? }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -12,4 +12,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "pages#index"
+  get "bootstrap", to: "pages#bootstrap", as: 'bootstrap' 
+
 end

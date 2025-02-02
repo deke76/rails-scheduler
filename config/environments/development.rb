@@ -1,9 +1,6 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  config.action_controller.default_url_options = {host: "localhost", port: 3000}
-  config.action_mailer.default_url_options = {host: "localhost", port: 3000}
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -26,7 +23,7 @@ Rails.application.configure do
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
-    config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } }
+    config.cache_store = :memory_store
     config.public_file_server.headers = {
       "Cache-Control" => "public, max-age=#{2.days.to_i}"
     }
@@ -65,8 +62,6 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-  config.assets.digest = false
-
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
@@ -79,9 +74,8 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
-  # Configure Redis for session storage
-  config.session_store :redis_session_store, key: "_sessions_development", compress: true, pool_size: 5, expire_after: 1.year
+  config.web_console.permissions = '10.0.2.2'
 
-  # Configure web_console in development
-  config.web_console.permissions = '192.168.65.1'
+  # Configure active storage
+  config.active_storage.service = :local
 end

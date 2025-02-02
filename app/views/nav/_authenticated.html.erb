@@ -1,11 +1,22 @@
-<div class="d-flex align-items-center w-full space-x-8">
-  <%= link_to "Teams",teams_path, class: "rounded px-2 py-1 text-secondary" %>
+<div class="d-flex align-items-center w-full">
+  <%= link_to teams_path do %>
+    <%= inline_svg_tag 'users.svg', 
+      class: 'v-100 h-100' %>
+  <% end %>
 </div>
-<div class="d-flex align-items-center w-full space-x-8">
-  <%= link_to "Locations",addresses_path, class: "rounded px-2 py-1 text-secondary" %>
+
+<div class="d-flex align-items-center w-full">
+  <%= link_to addresses_path do %>
+    <%= inline_svg_tag 'address.svg', 
+      class: 'v-100 h-100' %>
+  <% end %>
 </div>
-<div class="d-flex align-items-center justify-contents-end px-6 py-4 gap-4">
-  <%= link_to "Log out", 
-    destroy_user_session_path, 
-    data: {turbo_method: :delete} %>
+
+<div 
+  data-controller="navigation" 
+  class="d-flex align-items-center w-full pe-2"
+  id="optionsNavigationSettings"
+  data-action="navigation#click click@window->dropdown#hide">
+  <%= inline_svg_tag 'user.svg', 
+    class: 'v-100 h-100' %>
 </div>

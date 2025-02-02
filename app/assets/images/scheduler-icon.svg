@@ -3,7 +3,7 @@
   height="2em"
   viewBox="0 0 100 100"
   xmlns="http://www.w3.org/2000/svg"
-  fill="none"
+  fill="currentColor"
 >
   <!-- Background Circle -->
   <circle cx="50" cy="50" r="48" stroke="#2E8B57" stroke-width="4" fill="#ffffff" />

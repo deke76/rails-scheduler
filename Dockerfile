@@ -54,6 +54,7 @@ FROM build as final
 # Install packages needed for deployment
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libvips postgresql-client && \
+    gem update --system 3.5.23 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
@@ -68,6 +69,6 @@ COPY --from=build /rails /rails
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
+# Start the server by default, this can be overwritten at runtime
 # CMD ["./bin/rails", "server"]

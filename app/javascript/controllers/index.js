@@ -13,5 +13,11 @@ application.register("application", ApplicationController)
 import ExampleController from "./example_controller"
 application.register("example", ExampleController)
 
+import FormUploadController from "./form_upload_controller"
+application.register("form-upload", FormUploadController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import NavigationController from "./navigation_controller"
+application.register("navigation", NavigationController)

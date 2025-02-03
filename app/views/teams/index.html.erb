@@ -2,10 +2,9 @@
 
 <div id="teams">
   <% @teams.each do |team| %>
-    <%= render team %>
-    <p>
-      <%= link_to "Show this team", team %>
-    </p>
+    <%= link_to team do %>
+      <%= render team %>
+    <% end %>
   <% end %>
 </div>
 

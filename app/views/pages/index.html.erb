@@ -1,28 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Scheduling Website</title>
-</head>
-<body>
-	<header>
-		<h1>Welcome to the Scheduling Website</h1>
-	</header>
-	<nav>
-		<ul class="d-flex justify-content-around">
-      <%= link_to "Sign up", 
-        new_user_registration_path %>
-			<%= link_to 'Sign In', 
-        new_user_session_path %>
-      <%= link_to "Sign out", 
-        destroy_user_session_path, 
-        data: { turbo_method: :delete } %>
-		</ul>
-	</nav>
-	<main>
-		<p>Manage your schedules efficiently and effectively.</p>
-	</main>
-
-</body>
-</html>
+<div class="d-flex flex-column justify-content-between h-100">
+  <div>
+    <h1>Welcome to the Scheduling Website</h1>
+    <p>Manage your schedules efficiently and effectively.</p>
+  </div>
+  <% if user_signed_in? %>
+      <%= render "authenticated" %>
+  <% else %>
+      <%= render "unauthenticated" %>
+    <% end %>
+  </div>

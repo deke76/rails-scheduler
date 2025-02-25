@@ -74,7 +74,7 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
-  config.web_console.permissions = '10.0.2.2'
+  config.web_console.permissions = '192.168.0.0/16'
 
   # Configure active storage
   config.active_storage.service = :local

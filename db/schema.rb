@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_01_235003) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_26_045149) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -56,6 +56,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_01_235003) do
     t.string "unit_number"
   end
 
+  create_table "ice_times", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "day"
+    t.time "ice_time"
+    t.integer "length"
+    t.uuid "team_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_ice_times_on_team_id"
+    t.check_constraint "day::text = ANY (ARRAY['monday'::character varying, 'tuesday'::character varying, 'wednesday'::character varying, 'thursday'::character varying, 'friday'::character varying, 'saturday'::character varying, 'sunday'::character varying]::text[])"
+  end
+
   create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.uuid "team_id"
@@ -88,6 +99,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_01_235003) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "ice_times", "teams"
   add_foreign_key "memberships", "teams"
   add_foreign_key "memberships", "users"
 end

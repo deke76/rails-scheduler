@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Ice times</h1>
+
+<div id="ice_times">
+  <% @ice_times.each do |ice_time| %>
+    <%= render ice_time %>
+    <p>
+      <%= link_to "Show this ice time", ice_time %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New ice time", new_ice_time_path %>

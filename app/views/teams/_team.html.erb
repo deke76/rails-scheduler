@@ -1,7 +1,8 @@
 <div id="<%= dom_id team %>" class="card mb-2">
-  <img src="..." class="card-img-top" alt="...">
+
   <div class="card-body">
-    <h5 class="card-title"><%= team.name %></h5>
+  <%= image_tag url_for(team.logo) if team.logo.attached? %>
+    <h5 class="card-title"><%= team.logo.attached? %></h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
   </div>
 </div>

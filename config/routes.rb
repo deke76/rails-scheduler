@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  resources :addresses
-  resources :teams
+  resources :ice_times, :addresses, :teams
   devise_for :users
 
   resource :example, constraints: -> { Rails.env.development? }

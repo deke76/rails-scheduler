@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @ice_time %>
+
+<div>
+  <%= link_to "Edit this ice time", edit_ice_time_path(@ice_time) %> |
+  <%= link_to "Back to ice times", ice_times_path %>
+
+  <%= button_to "Destroy this ice time", @ice_time, method: :delete %>
+</div>

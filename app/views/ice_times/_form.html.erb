@@ -1,0 +1,39 @@
+<%= form_with(model: ice_time) do |form| %>
+  <% if ice_time.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(ice_time.errors.count, "error") %> prohibited this ice_time from being saved:</h2>
+
+      <ul>
+        <% ice_time.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mt-4 mx-auto w-75">
+    <div class="bg-white py-4 px-4 shadow rounded">
+      <%= bootstrap_form_for(@ice_time) do |form| %>
+        <div class="form-group">
+          <%= form.text_field :day, floating: true %>
+        </div>
+
+        <div class="form-group">
+          <%= form.time_field :ice_time, floating: true %>
+        </div>
+
+        <div class="form-group">
+          <%= form.number_field :length, floating: true %>
+        </div>
+      
+        <div class="form-group hidden">
+          <%= form.hidden_field :team_id %>
+        </div>
+
+        <div class="text-end">
+          <%= form.submit %>
+        </div>
+      <% end %>
+    </div>
+
+<% end %>

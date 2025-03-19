@@ -12,6 +12,13 @@
   <% end %>
 </div>
 
+<div class="d-flex align-items-center w-full">
+  <%= link_to ice_times_path do %>
+    <%= inline_svg_tag 'clock.svg', 
+      class: 'v-100 h-100' %>
+  <% end %>
+</div>
+
 <div 
   data-controller="navigation" 
   class="d-flex align-items-center w-full pe-2"

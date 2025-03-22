@@ -5,40 +5,27 @@ export default class extends Controller {
   static targets = ["autocomplete", "streetNumber", "route", "locality", "administrativeArea", "country", "postalCode"];
 
   connect() {
-    console.log("Address Autocomplete Controller connected");
-    this.autocomplete = new google.maps.places.Autocomplete(this.autocompleteTarget, {
-      types: ['geocode']
-    });
-
-    this.autocomplete.addListener('place_changed', this.placeChanged.bind(this));
+    this.autocompleteTarget.addEventListener('keyup', this.handleKeyUp.bind(this));
   }
 
-  placeChanged() {
-    const place = this.autocomplete.getPlace();
-    const components = place.address_components || [];
+  handleKeyUp(event) {
+    if (event.key.length === 1 || event.key === 'Backspace') {
+      this.fetchSuggestions(this.autocompleteTarget.value);
+    }
+  }
 
-    components.forEach(component => {
-      const addressType = component.types[0];
-      switch (addressType) {
-        case 'street_number':
-          this.streetNumberTarget.value = component.long_name;
-          break;
-        case 'route':
-          this.routeTarget.value = component.long_name;
-          break;
-        case 'locality':
-          this.localityTarget.value = component.long_name;
-          break;
-        case 'administrative_area_level_1':
-          this.administrativeAreaTarget.value = component.short_name;
-          break;
-        case 'country':
-          this.countryTarget.value = component.long_name;
-          break;
-        case 'postal_code':
-          this.postalCodeTarget.value = component.long_name;
-          break;
-      }
-    });
+  fetchSuggestions(query) {
+    console.log("query", query);
+    if (query.length < 3) return;
+
+    fetch(`/addresses/autocomplete?query=${query}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log("data", data);
+        this.displaySuggestions(data.predictions);
+      })
+      .catch(error => {
+        console.error('Error fetching autocomplete suggestions:', error);
+      });
   }
 }

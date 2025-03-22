@@ -1,5 +1,6 @@
 class AddressesController < ApplicationController
   before_action :set_address, only: %i[ show edit update destroy ]
+  require 'net/http'
 
   # GET /addresses or /addresses.json
   def index
@@ -56,6 +57,15 @@ class AddressesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def autocomplete
+    query = params[:query]
+    uri = URI("https://maps.googleapis.com/maps/api/place/autocomplete/json?input=#{query}&key=#{ENV['GOOGLE_API_KEY']}")
+    response = Net::HTTP.get(uri)
+    puts "response", response
+    render json: response
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

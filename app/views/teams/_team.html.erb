@@ -1,8 +1,12 @@
-<div id="<%= dom_id team %>" class="card mb-2">
-
+<div id="<%= dom_id team %>" class="card bg-light mb-2">
   <div class="card-body">
-  <%= image_tag url_for(team.logo) if team.logo.attached? %>
-    <h5 class="card-title"><%= team.logo.attached? %></h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <div class="d-flex gap-2 align-items-center justify-content-between">
+      <%= image_tag team.logo, class: "w-25 rounded-full" %>
+      <div class="d-flex flex-column justify-content-end align-items-end">
+        <h4 class="card-title mb-0"><%= team.name %></h4>
+        <p class="fw-lighter fst-italic text-muted small mb-0">record</p>
+      </div>
+    </div>
+    <p class="card-text mt-2 text-center">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
   </div>
 </div>

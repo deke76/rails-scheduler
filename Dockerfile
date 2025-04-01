@@ -54,12 +54,13 @@ FROM build as final
 # Install packages needed for deployment
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libvips postgresql-client && \
-    gem update --system 3.5.23 && \
+    gem update --system 3.6.6 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
+COPY --from=build /usr/local/node /usr/local/node
 
 # Run and own only the runtime files as a non-root user for security
 # RUN useradd rails --create-home --shell /bin/bash && \

@@ -1,8 +1,7 @@
-<%= form_with(model: ice_time) do |form| %>
+<%= bootstrap_form_for(@ice_time) do |form| %>
   <% if ice_time.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(ice_time.errors.count, "error") %> prohibited this ice_time from being saved:</h2>
-
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(ice_time.errors.count, "error") %> prohibited this ice time from being saved:</h4>
       <ul>
         <% ice_time.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -13,27 +12,35 @@
 
   <div class="mt-4 mx-auto w-75">
     <div class="bg-white py-4 px-4 shadow rounded">
-      <%= bootstrap_form_for(@ice_time) do |form| %>
-        <div class="form-group">
-          <%= form.text_field :day, floating: true %>
+      <div class="form-group mb-3" data-controller="day-selector">
+        <div class="d-flex border rounded">
+          <% IceTime::VALID_DAYS.each do |day| %>
+            <div class="flex-fill text-center border-end py-2 cursor-pointer" 
+                 data-day-selector-target="day"
+                 data-day="<%= day %>"
+                 data-action="click->day-selector#select">
+              <%= day == 'thursday' ? 'R' : day.first.upcase %>
+              <%= check_box_tag "ice_time[day]", day, false, class: "d-none" %>
+            </div>
+          <% end %>
         </div>
+      </div>
 
-        <div class="form-group">
-          <%= form.time_field :ice_time, floating: true %>
-        </div>
+      <div class="form-group">
+        <%= form.time_field :start_time, class: "form-control", step: 1500 %>
+      </div>
 
-        <div class="form-group">
-          <%= form.number_field :length, floating: true %>
-        </div>
-      
-        <div class="form-group hidden">
-          <%= form.hidden_field :team_id %>
-        </div>
+      <div class="form-group">
+        <%= form.number_field :length, floating: true %>
+      </div>
+    
+      <div class="form-group hidden">
+        <%= form.hidden_field :team_id %>
+      </div>
 
-        <div class="text-end">
-          <%= form.submit %>
-        </div>
-      <% end %>
+      <div class="text-end">
+        <%= form.submit %>
+      </div>
     </div>
-
+  </div>
 <% end %>

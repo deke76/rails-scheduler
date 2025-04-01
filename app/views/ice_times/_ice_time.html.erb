@@ -1,22 +1,22 @@
 <div id="<%= dom_id ice_time %>">
   <p>
     <strong>Day:</strong>
-    <%= ice_time.day %>
+    <%= ice_time.day_display %>
   </p>
 
   <p>
     <strong>Ice time:</strong>
-    <%= ice_time.ice_time %>
+    <%= ice_time.ice_time.strftime("%I:%M %p") %>
   </p>
 
   <p>
     <strong>Length:</strong>
-    <%= ice_time.length %>
+    <%= ice_time.length %> minutes
   </p>
 
   <p>
     <strong>Team:</strong>
-    <%= ice_time.team_id %>
+    <%= ice_time.team.name %>
   </p>
 
 </div>

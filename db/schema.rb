@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_27_025254) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_01_045318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -60,7 +60,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_27_025254) do
 
   create_table "ice_times", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "day"
-    t.time "ice_time"
+    t.time "start_time"
     t.integer "length"
     t.uuid "team_id", null: false
     t.datetime "created_at", null: false

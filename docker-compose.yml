@@ -13,7 +13,7 @@ services:
       - rails.env
     environment:
       - GEM_HOME=/usr/local/bundle
-      - PATH=/usr/local/bundle/bin:$PATH
+      - PATH=/rails/bin:/usr/local/node/bin:/usr/local/bundle/bin:/rails/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       - BUNDLE_PATH=/usr/local/bundle
       - BUNDLE_APP_CONFIG=/usr/local/bundle
     depends_on:

@@ -12,6 +12,7 @@ class IceTimesController < ApplicationController
 
   # GET /ice_times/new
   def new
+    @teams = current_user.memberships
     @ice_time = IceTime.new
   end
 

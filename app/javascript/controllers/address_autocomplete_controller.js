@@ -2,30 +2,61 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="address-autocomplete"
 export default class extends Controller {
-  static targets = ["autocomplete", "streetNumber", "route", "locality", "administrativeArea", "country", "postalCode"];
+  static targets = ["autocomplete", "results", "streetNumber", "route", "locality", "administrativeArea", "country", "postalCode"]
 
   connect() {
-    this.autocompleteTarget.addEventListener('keyup', this.handleKeyUp.bind(this));
+    this.boundHandleKeyUp = this.handleKeyUp.bind(this)
+    this.autocompleteTarget.addEventListener("keyup", this.boundHandleKeyUp)
   }
 
-  handleKeyUp(event) {
-    if (event.key.length === 1 || event.key === 'Backspace') {
-      this.fetchSuggestions(this.autocompleteTarget.value);
+  disconnect() {
+    this.autocompleteTarget.removeEventListener("keyup", this.boundHandleKeyUp)
+  }
+
+  async handleKeyUp(event) {
+    const query = event.target.value
+    if (query.length >= 3) {
+      this.fetchSuggestions(query)
+    } else {
+      this.resultsTarget.innerHTML = ""
     }
   }
 
-  fetchSuggestions(query) {
-    console.log("query", query);
-    if (query.length < 3) return;
-
-    fetch(`/addresses/autocomplete?query=${query}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log("data", data);
-        this.displaySuggestions(data.predictions);
+  async fetchSuggestions(query) {
+    try {
+      const response = await fetch(`/addresses/autocomplete?query=${encodeURIComponent(query)}`, {
+        headers: {
+          "Accept": "text/vnd.turbo-stream.html"
+        }
       })
-      .catch(error => {
-        console.error('Error fetching autocomplete suggestions:', error);
-      });
+      
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+      
+      const html = await response.text()
+      this.resultsTarget.innerHTML = html
+    } catch (error) {
+      console.error("Error fetching autocomplete suggestions:", error)
+      this.resultsTarget.innerHTML = ""
+    }
+  }
+
+  selectAddress(event) {
+    const addressData = JSON.parse(event.currentTarget.dataset.addressValue)
+    const address = addressData.address
+
+    // Update the autocomplete input with the selected address
+    this.autocompleteTarget.value = addressData.display_name
+
+    // Update hidden fields with address components
+    if (this.hasStreetNumberTarget) this.streetNumberTarget.value = address.house_number || ""
+    if (this.hasRouteTarget) this.routeTarget.value = address.road || ""
+    if (this.hasLocalityTarget) this.localityTarget.value = address.city || ""
+    if (this.hasAdministrativeAreaTarget) this.administrativeAreaTarget.value = address.state || ""
+    if (this.hasCountryTarget) this.countryTarget.value = address.country || ""
+    if (this.hasPostalCodeTarget) this.postalCodeTarget.value = address.postcode || ""
+
+    // Clear the results
+    this.resultsTarget.innerHTML = ""
   }
 }
+

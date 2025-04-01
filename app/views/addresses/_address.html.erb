@@ -1,6 +1,13 @@
-<div id="<%= dom_id address %>" class="card mb-2">
+<div id="<%= dom_id address %>" class="card bg-light mb-2">
   <div class="card-body">
     <h5 class="card-title"><%= address.name %></h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <p class="card-text">
+      <% if address.unit_number.present? %>
+        <%= address.unit_number %>, 
+      <% end %>
+      <%= [address.street_number, address.street].compact.join(' ') %> <%= address.city %><br>
+      <%= [address.province, address.postal_code].compact.join(' ') %><br>
+      <%= address.country_name %>
+    </p>
   </div>
 </div>

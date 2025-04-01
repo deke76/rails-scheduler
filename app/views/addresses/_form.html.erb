@@ -1,6 +1,6 @@
 <div class="mt-4 mx-auto w-75" data-controller="address-autocomplete">
   <div class="bg-white py-4 px-4 shadow rounded">
-    <%= form_with(model: address, class: "needs-validation", novalidate: true) do |form| %>
+    <%= bootstrap_form_with(model: address, class: "needs-validation", novalidate: true) do |form| %>
       <% if address.errors.any? %>
         <div class="alert alert-danger">
           <h4 class="alert-heading"><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h4>
@@ -17,6 +17,16 @@
         <div class="invalid-feedback">
           Please enter a valid address.
         </div>
+        <%= turbo_frame_tag "address_autocomplete_results" do %>
+          <div class="list-group mt-2" data-address-autocomplete-target="results">
+          </div>
+        <% end %>
+      </div>
+
+      <div class="form-group mb-3" data-address-autocomplete-target="mapPreview">
+        <% if address.map_image.attached? %>
+          <%= image_tag address.map_image, class: "img-fluid rounded" %>
+        <% end %>
       </div>
 
       <%= form.hidden_field :street_number, id: "street_number", data: { address_autocomplete_target: "streetNumber" } %>
@@ -25,6 +35,7 @@
       <%= form.hidden_field :administrative_area_level_1, id: "administrative_area_level_1", data: { address_autocomplete_target: "administrativeArea" } %>
       <%= form.hidden_field :country, id: "country", data: { address_autocomplete_target: "country" } %>
       <%= form.hidden_field :postal_code, id: "postal_code", data: { address_autocomplete_target: "postalCode" } %>
+      <%= form.hidden_field :map_image_url, data: { address_autocomplete_target: "mapImageUrl" } %>
 
       <div class="d-flex justify-content-between">
         <%= form.submit "Save Address", class: "btn btn-primary" %>

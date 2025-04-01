@@ -1,14 +1,14 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Addresses</h1>
-
-<div id="addresses">
-  <% @addresses.each do |address| %>
-    <%= render address %>
-    <p>
-      <%= link_to "Show this address", address %>
-    </p>
+<div class="d-flex justify-content-between align-items-top mb-4 mr-2">
+  <h1 class="mb-0">Addresses</h1>
+  <%= link_to new_address_path do %>
+    <%= image_tag "plus.svg", alt: "Add", width: 20, height: 20 %>
   <% end %>
 </div>
 
-<%= link_to "New address", new_address_path %>
+<div id="addresses">
+  <% @addresses.each do |address| %>
+    <%= link_to address, class: "text-decoration-none" do %>
+      <%= render address %>
+    <% end %>
+  <% end %>
+</div>

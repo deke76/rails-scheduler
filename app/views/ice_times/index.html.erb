@@ -1,14 +1,14 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Ice times</h1>
-
-<div id="ice_times">
-  <% @ice_times.each do |ice_time| %>
-    <%= render ice_time %>
-    <p>
-      <%= link_to "Show this ice time", ice_time %>
-    </p>
+<div class="d-flex justify-content-between align-items-top mb-4 mr-2">
+  <h1 class="mb-0">Ice times</h1>
+  <%= link_to new_ice_time_path do %>
+    <%= image_tag "plus.svg", alt: "Add", width: 20, height: 20 %>
   <% end %>
 </div>
 
-<%= link_to "New ice time", new_ice_time_path %>
+<div id="ice_times">
+  <% @ice_times.each do |ice_time| %>
+    <%= link_to ice_time, class: "text-decoration-none" do %>
+      <%= render ice_time %>
+    <% end %>
+  <% end %>
+</div>

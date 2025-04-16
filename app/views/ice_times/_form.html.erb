@@ -11,14 +11,14 @@
   <% end %>
 
   <div class="mt-4 mx-auto w-75">
-    <div class="bg-white py-4 px-4 shadow rounded">
-      <div class="form-group mb-3" data-controller="day-selector">
+    <div class="bg-white py-4 px-4 shadow rounded" data-controller="ice-time-selector">
+      <div class="form-group mb-3">
         <div class="d-flex border rounded">
           <% IceTime::VALID_DAYS.each do |day| %>
             <div class="flex-fill text-center border-end py-2 cursor-pointer" 
-                 data-day-selector-target="day"
-                 data-day="<%= day %>"
-                 data-action="click->day-selector#select">
+              data-ice-time-selector-target="day"
+              data-day="<%= day %>"
+              data-action="click->ice-time-selector#select">
               <%= day == 'thursday' ? 'R' : day.first.upcase %>
               <%= check_box_tag "ice_time[day]", day, false, class: "d-none" %>
             </div>
@@ -26,21 +26,62 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <%= form.time_field :start_time, class: "form-control", step: 1500 %>
-      </div>
+      <div class="form-group d-flex flex-column gap-0" id="<%= form.object_name %>-input">
+        <label class="form-label mb-0">Start Time</label>
+        <div class="d-flex justify-content-start align-content-center gap-1"> 
+          <div class="w-25" id="<%= form.object_name %>-input-<%=:hour%>">
+            <%= form.number_field :hour, 
+              hide_label: true,
+              placeholder: 'hh',
+              min: 0, 
+              step: 1 %>
+          </div>
+          <span class="py-1">:</span>
 
-      <div class="form-group">
-        <%= form.number_field :length, floating: true %>
+          <div class="w-25" id="<%= form.object_name %>-input-<%=:minute%>">
+            <%= form.number_field :minute, 
+              hide_label: true,
+              placeholder: 'mm',
+              min: 0, 
+              step: 15 %>
+          </div>
+
+          <div class="d-flex w-50 h-100" id="<%= form.object_name %>-input-<%=:am_pm%>">
+              <% ['AM', 'PM'].each do |time| %>
+                <div class="flex-fill text-center cursor-pointer form-control
+                  <%= time == 'AM' ? 'rounded-end-0 border-end-0' : 'rounded-start-0' %>"
+                  data-ice-time-selector-target="time"
+                  data-time="<%= time %>"
+                  data-action="click->ice-time-selector#selectTime">
+                  <%= time %>
+                  <% puts "time: #{time == 'PM'}" %>
+                  <%= radio_button_tag "ice_time[am_pm]", time, time =='PM', class: "d-none" %>
+                </div>
+              <% end %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="d-flex justify-content-between">
+        <div class="form-group w-25" id="<%= form.object_name %>-input-<%=:length%>">
+          <%= form.number_field :length,
+            class: "form-control",
+            hide_label: true,
+            placeholder: 'mm',
+            min: 0,
+            step: 15 %>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn border rounded-circle">
+            <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
+          </button>
+        </div>
       </div>
     
       <div class="form-group hidden">
         <%= form.hidden_field :team_id %>
       </div>
 
-      <div class="text-end">
-        <%= form.submit %>
-      </div>
     </div>
   </div>
 <% end %>

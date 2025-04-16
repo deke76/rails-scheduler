@@ -13,8 +13,8 @@ application.register("alert", AlertController)
 import ApplicationController from "./application_controller"
 application.register("application", ApplicationController)
 
-import DaySelectorController from "./day_selector_controller"
-application.register("day-selector", DaySelectorController)
+import IceTimeSelectorController from "./ice_time_selector_controller"
+application.register("ice-time-selector", IceTimeSelectorController)
 
 import ExampleController from "./example_controller"
 application.register("example", ExampleController)

@@ -1,0 +1,31 @@
+<%= turbo_frame_tag dom_id(model) do %>
+  <div class="mt-4 mx-auto w-75">
+    <div class="bg-white py-4 px-4 shadow rounded">
+      <%= turbo_stream_from model %>
+      
+      <div id="errors">
+        <% if local_assigns[:errors] && model.errors.any? %>
+          <div class="alert alert-danger">
+            <h4 class="alert-heading">
+              <%= pluralize(model.errors.count, "error") %> prohibited this <%= model.class.model_name.human.downcase %> from being saved:
+            </h4>
+            <ul>
+              <% model.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+
+      <%= yield %>
+
+      <% if local_assigns[:actions] %>
+        <div class="d-flex justify-content-between mt-3">
+          <%= form.submit class: "btn btn-primary" %>
+          <%= link_to 'Back', back_path, class: "btn btn-secondary", data: { turbo_frame: "_top" } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

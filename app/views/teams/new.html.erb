@@ -1,2 +1,17 @@
-<%= render "form", team: @team %>
+<%= turbo_frame_tag "new_team" do %>
+  <div class="mt-4 mx-auto w-75">
+    <div class="bg-white py-4 px-4 shadow rounded">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">New Team</h2>
+        <%= link_to teams_path, 
+            class: "btn btn-light border border-secondary",
+            data: { turbo_frame: "_top" } do %>
+          <%= inline_svg_tag 'x.svg', class: 'v-100 h-100' %>
+        <% end %>
+      </div>
+
+      <%= render "form", team: @team %>
+    </div>
+  </div>
+<% end %>
 

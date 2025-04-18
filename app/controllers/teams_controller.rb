@@ -30,9 +30,20 @@ class TeamsController < ApplicationController
           user_id: current_user.id, 
           team_id: @team.id, 
           role: :owner)
+        
+        format.turbo_stream { 
+          turbo_stream.replace "teams", 
+            partial: "teams/team", 
+            locals: { team: @team }
+        }
         format.html { redirect_to team_url(@team), notice: "Team was successfully created." }
         format.json { render :show, status: :created, location: @team }
       else
+        format.turbo_stream {
+          turbo_stream.replace "errors",
+            partial: "shared/errors",
+            locals: { model: @team }
+        }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end
@@ -43,9 +54,19 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
+        format.turbo_stream {
+          turbo_stream.replace dom_id(@team),
+            partial: "teams/team",
+            locals: { team: @team }
+        }
         format.html { redirect_to team_url(@team), notice: "Team was successfully updated." }
         format.json { render :show, status: :ok, location: @team }
       else
+        format.turbo_stream {
+          turbo_stream.replace "errors",
+            partial: "shared/errors",
+            locals: { model: @team }
+        }
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end

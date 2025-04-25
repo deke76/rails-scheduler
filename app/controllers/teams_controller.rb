@@ -21,7 +21,6 @@ class TeamsController < ApplicationController
 
   # POST /teams or /teams.json
   def create
-    puts "team_params: #{team_params}"
     @team = Team.new(team_params)
     
     respond_to do |format|
@@ -32,17 +31,18 @@ class TeamsController < ApplicationController
           role: :owner)
         
         format.turbo_stream { 
-          turbo_stream.replace "teams", 
-            partial: "teams/team", 
-            locals: { team: @team }
+          render turbo_stream: [
+            turbo_stream.replace("new_team", partial: "teams/team", locals: { team: @team }),
+            turbo_stream.replace("teams", partial: "teams/teams", locals: { teams: Team.all })
+          ]
         }
         format.html { redirect_to team_url(@team), notice: "Team was successfully created." }
         format.json { render :show, status: :created, location: @team }
       else
         format.turbo_stream {
-          turbo_stream.replace "errors",
-            partial: "shared/errors",
-            locals: { model: @team }
+          render turbo_stream: turbo_stream.replace("new_team", 
+            partial: "teams/form", 
+            locals: { team: @team })
         }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @team.errors, status: :unprocessable_entity }
@@ -55,17 +55,17 @@ class TeamsController < ApplicationController
     respond_to do |format|
       if @team.update(team_params)
         format.turbo_stream {
-          turbo_stream.replace dom_id(@team),
+          render turbo_stream: turbo_stream.replace(dom_id(@team),
             partial: "teams/team",
-            locals: { team: @team }
+            locals: { team: @team })
         }
         format.html { redirect_to team_url(@team), notice: "Team was successfully updated." }
         format.json { render :show, status: :ok, location: @team }
       else
         format.turbo_stream {
-          turbo_stream.replace "errors",
-            partial: "shared/errors",
-            locals: { model: @team }
+          render turbo_stream: turbo_stream.replace(dom_id(@team),
+            partial: "teams/form",
+            locals: { team: @team })
         }
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @team.errors, status: :unprocessable_entity }

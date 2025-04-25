@@ -1,4 +1,5 @@
 <%= turbo_frame_tag dom_id(model) do %>
+  <%= puts "model: #{model}" %>
   <div class="mt-4 mx-auto w-75">
     <div class="bg-white py-4 px-4 shadow rounded">
       <%= turbo_stream_from model %>

@@ -26,5 +26,9 @@
     <div class="collapse" id="fileChooser">
       <%= form.file_field :logo %>
     </div>
+
+    <% content_for :form_actions do %>
+      <%= form.submit class: "btn btn-primary" %>
+    <% end %>
   <% end %>
 <% end %>

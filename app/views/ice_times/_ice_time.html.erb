@@ -1,22 +1,23 @@
-<div id="<%= dom_id ice_time %>">
-  <p>
-    <strong>Day:</strong>
-    <%= ice_time.day_display %>
-  </p>
-
-  <p>
-    <strong>Ice time:</strong>
-    <%= ice_time.ice_time.strftime("%I:%M %p") %>
-  </p>
-
-  <p>
-    <strong>Length:</strong>
-    <%= ice_time.length %> minutes
-  </p>
-
-  <p>
-    <strong>Team:</strong>
-    <%= ice_time.team.name %>
-  </p>
-
+<div id="<%= dom_id(ice_time) %>" class="card mb-3">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <h5 class="card-title mb-1"><%= ice_time.team.name %></h5>
+        <p class="card-text text-muted mb-1">
+          <%= ice_time.day %> at <%= ice_time.ice_time.strftime("%I:%M %p") %>
+        </p>
+        <p class="card-text text-muted mb-0">
+          Length: <%= ice_time.length %> minutes
+        </p>
+      </div>
+      <div class="d-flex gap-2">
+        <%= link_to edit_ice_time_path(ice_time), class: "text-muted" do %>
+          <%= inline_svg_tag 'edit.svg', class: 'v-100 h-100' %>
+        <% end %>
+        <%= button_to ice_time_path(ice_time), method: :delete, class: "text-muted border-0 bg-transparent p-0", form: { data: { turbo_confirm: "Are you sure?" } } do %>
+          <%= inline_svg_tag 'trash.svg', class: 'v-100 h-100' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

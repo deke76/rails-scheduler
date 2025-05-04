@@ -1,34 +1,45 @@
-<%= bootstrap_form_for(team, data: { turbo: true }, multipart: true) do |form| %>
-  <%= render 'shared/form_container', 
-    model: team, 
-    back_path: teams_path,
-    errors: true,
-    actions: true do %>
-    
-    <div class="form-group">
-      <div class="d-flex justify-content-between align-items-center form-label px-1">
-        <%= form.label :name, "Name" %>
-        <button 
-          class="btn btn-light border border-secondary" 
-          id="toggle_file_upload_field"
-          type="button" 
-          data-bs-toggle="collapse" 
-          data-bs-target="#fileChooser" 
-          aria-expanded="false" 
-          aria-controls="fileChooser">
-          <%= inline_svg_tag 'image-alt.svg', 
-            alt: 'Logo',
-            class: 'v-100 h-100' %>
-        </button>
-      </div>
-      <%= form.text_field :name, hide_label: true %>
+<%= bootstrap_form_with(model: team, data: { turbo: true }, multipart: true) do |form| %>
+  <% if team.errors.any? %>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(team.errors.count, "error") %> prohibited this team from being saved:</h4>
+      <ul>
+        <% team.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
     </div>
-    <div class="collapse" id="fileChooser">
-      <%= form.file_field :logo %>
-    </div>
-
-    <% content_for :form_actions do %>
-      <%= form.submit class: "btn btn-primary" %>
-    <% end %>
   <% end %>
+
+  <div class="form-group">
+    <div class="d-flex justify-content-start align-items-baseline form-label">
+      <button 
+        class="btn text-muted" 
+        id="toggle_file_upload_field"
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#fileChooser" 
+        aria-expanded="false" 
+        aria-controls="fileChooser">
+        <%= inline_svg_tag 'image-alt.svg', 
+          alt: 'Logo',
+          class: 'v-100 h-100' %>
+      </button>
+      <%= form.label :name, "Name" %>
+    </div>
+  </div>
+  <%= form.text_field :name, hide_label: true %>
+  <div class="collapse" id="fileChooser">
+    <%= form.file_field :logo %>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3">
+    <%= link_to teams_path, class: "btn" do %>
+      <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
+    <% end %>
+    <div class="form-group">
+      <button type="submit" class="btn">
+        <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
+      </button>
+    </div>
+  </div>
 <% end %>

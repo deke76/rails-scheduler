@@ -1,69 +1,61 @@
 <% if model.new_record? && !local_assigns[:skip_frame] %>
   <%= turbo_frame_tag "new_team" do %>
-    <div class="mt-4 mx-auto w-75">
-      <div class="bg-white py-4 px-4 shadow rounded">
-        <% unless model.new_record? %>
-          <%= turbo_stream_from model %>
-        <% end %>
-        
-        <div id="errors">
-          <% if local_assigns[:errors] && model.errors.any? %>
-            <div class="alert alert-danger">
-              <h4 class="alert-heading">
-                <%= pluralize(model.errors.count, "error") %> prohibited this <%= model.class.model_name.human.downcase %> from being saved:
-              </h4>
-              <ul>
-                <% model.errors.each do |error| %>
-                  <li><%= error.full_message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
+    <% unless model.new_record? %>
+      <%= turbo_stream_from model %>
+    <% end %>
+    
+    <div id="errors">
+      <% if local_assigns[:errors] && model.errors.any? %>
+        <div class="alert alert-danger">
+          <h4 class="alert-heading">
+            <%= pluralize(model.errors.count, "error") %> prohibited this <%= model.class.model_name.human.downcase %> from being saved:
+          </h4>
+          <ul>
+            <% model.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
         </div>
-
-        <%= yield %>
-
-        <% if local_assigns[:actions] %>
-          <div class="d-flex justify-content-between mt-3">
-            <%= yield :form_actions %>
-            <%= link_to 'Back', back_path, class: "btn btn-secondary", data: { turbo_frame: "_top" } %>
-          </div>
-        <% end %>
-      </div>
+      <% end %>
     </div>
+
+    <%= yield %>
+
+    <% if local_assigns[:actions] %>
+      <div class="d-flex justify-content-between mt-3">
+        <%= yield :form_actions %>
+        <%= link_to 'Back', back_path, class: "btn btn-secondary", data: { turbo_frame: "_top" } %>
+      </div>
+    <% end %>
   <% end %>
 <% else %>
   <%= turbo_frame_tag dom_id(model) do %>
-    <div class="mt-4 mx-auto w-75">
-      <div class="bg-white py-4 px-4 shadow rounded">
-        <% unless model.new_record? %>
-          <%= turbo_stream_from model %>
-        <% end %>
-        
-        <div id="errors">
-          <% if local_assigns[:errors] && model.errors.any? %>
-            <div class="alert alert-danger">
-              <h4 class="alert-heading">
-                <%= pluralize(model.errors.count, "error") %> prohibited this <%= model.class.model_name.human.downcase %> from being saved:
-              </h4>
-              <ul>
-                <% model.errors.each do |error| %>
-                  <li><%= error.full_message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
+    <% unless model.new_record? %>
+      <%= turbo_stream_from model %>
+    <% end %>
+    
+    <div id="errors">
+      <% if local_assigns[:errors] && model.errors.any? %>
+        <div class="alert alert-danger">
+          <h4 class="alert-heading">
+            <%= pluralize(model.errors.count, "error") %> prohibited this <%= model.class.model_name.human.downcase %> from being saved:
+          </h4>
+          <ul>
+            <% model.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
         </div>
-
-        <%= yield %>
-
-        <% if local_assigns[:actions] %>
-          <div class="d-flex justify-content-between mt-3">
-            <%= yield :form_actions %>
-            <%= link_to 'Back', back_path, class: "btn btn-secondary", data: { turbo_frame: "_top" } %>
-          </div>
-        <% end %>
-      </div>
+      <% end %>
     </div>
+
+    <%= yield %>
+
+    <% if local_assigns[:actions] %>
+      <div class="d-flex justify-content-between mt-3">
+        <%= yield :form_actions %>
+        <%= link_to 'Back', back_path, class: "btn btn-secondary", data: { turbo_frame: "_top" } %>
+      </div>
+    <% end %>
   <% end %>
 <% end %>

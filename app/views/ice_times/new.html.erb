@@ -1,9 +1,9 @@
 <h1>New ice time</h1>
 
-<%= render "form", ice_time: @ice_time %>
-
-<br>
-
-<div>
-  <%= link_to "Back to ice times", ice_times_path %>
-</div>
+<%= turbo_frame_tag "new_ice_time" do %>
+  <div class="mt-4 mx-auto">
+    <%= render 'shared/card' do %>
+      <%= render "form", ice_time: @ice_time %>
+    <% end %>
+  </div>
+<% end %>

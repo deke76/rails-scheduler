@@ -1,13 +1,20 @@
-<div id="<%= dom_id address %>" class="card bg-light mb-2">
-  <div class="card-body">
-    <h5 class="card-title"><%= address.name %></h5>
-    <p class="card-text">
-      <% if address.unit_number.present? %>
-        <%= address.unit_number %>, 
-      <% end %>
-      <%= [address.street_number, address.street].compact.join(' ') %> <%= address.city %><br>
-      <%= [address.province, address.postal_code].compact.join(' ') %><br>
-      <%= address.country_name %>
-    </p>
+<%= render 'shared/card' do %>
+  <div class="d-flex flex-column">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="card-title mb-0"><%= address.name %></h5>
+      <%= render 'addresses/actions', address: address %>
+    </div>
+    <div>
+      <p class="text-muted mb-0">
+        <% if address.unit_number.present? %>
+          <%= address.unit_number %>, 
+        <% end %>
+        <%= [address.street_number, address.street].compact.join(' ') %> <%= address.city %>
+      </p>
+      <p class="text-muted mb-0">
+        <%= [address.province, address.postal_code].compact.join(' ') %>
+      </p>
+      <p class="text-muted mb-0"><%= address.country_name %></p>
+    </div>
   </div>
-</div>
+<% end %>

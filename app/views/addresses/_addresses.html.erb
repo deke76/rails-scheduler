@@ -1,12 +1,9 @@
-<%= render 'shared/index' %>
-
-<%= turbo_frame_tag "new_address" %>
 <%= turbo_frame_tag "addresses" do %>
-  <% @addresses.each do |address| %>
+  <% addresses.each do |address| %>
     <%= turbo_frame_tag dom_id(address) do %>
       <%= link_to address, class: "text-decoration-none" do %>
         <%= render address %>
       <% end %>
     <% end %>
   <% end %>
-<% end %>
+<% end %> 

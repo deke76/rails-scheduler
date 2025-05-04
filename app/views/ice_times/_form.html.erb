@@ -1,87 +1,102 @@
-<%= bootstrap_form_for(@ice_time) do |form| %>
-  <% if ice_time.errors.any? %>
+<%= bootstrap_form_with(model: @ice_time, data: { turbo: true }) do |form| %>
+  <% if @ice_time.errors.any? %>
     <div class="alert alert-danger">
-      <h4 class="alert-heading"><%= pluralize(ice_time.errors.count, "error") %> prohibited this ice time from being saved:</h4>
+      <h4 class="alert-heading"><%= pluralize(@ice_time.errors.count, "error") %> prohibited this ice time from being saved:</h4>
       <ul>
-        <% ice_time.errors.each do |error| %>
+        <% @ice_time.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
-
-  <div class="mt-4 mx-auto w-75">
-    <div class="bg-white py-4 px-4 shadow rounded" data-controller="ice-time-selector">
-      <div class="form-group mb-3">
-        <div class="d-flex border rounded">
-          <% IceTime::VALID_DAYS.each do |day| %>
-            <div class="flex-fill text-center border-end py-2 cursor-pointer" 
-              data-ice-time-selector-target="day"
-              data-day="<%= day %>"
-              data-action="click->ice-time-selector#select">
-              <%= day == 'thursday' ? 'R' : day.first.upcase %>
-              <%= check_box_tag "ice_time[day]", day, false, class: "d-none" %>
-            </div>
-          <% end %>
-        </div>
+    
+  <div data-controller="ice-time-selector">
+    <div class="form-group mb-3">
+      <div class="d-flex border rounded">
+        <% IceTime::VALID_DAYS.each do |day| %>
+          <div class="flex-fill text-center border-end py-2 cursor-pointer" 
+            data-ice-time-selector-target="day"
+            data-day="<%= day %>"
+            data-action="click->ice-time-selector#select">
+            <%= day == 'thursday' ? 'R' : day.first.upcase %>
+            <%= check_box_tag "ice_time[day]", day, false, class: "d-none" %>
+          </div>
+        <% end %>
       </div>
+    </div>
 
-      <div class="form-group d-flex flex-column gap-0" id="<%= form.object_name %>-input">
-        <label class="form-label mb-0">Start Time</label>
-        <div class="d-flex justify-content-start align-content-center gap-1"> 
-          <div class="w-25" id="<%= form.object_name %>-input-<%=:hour%>">
-            <%= form.number_field :hour, 
-              hide_label: true,
-              placeholder: 'hh',
-              min: 0, 
-              step: 1 %>
-          </div>
-          <span class="py-1">:</span>
-
-          <div class="w-25" id="<%= form.object_name %>-input-<%=:minute%>">
-            <%= form.number_field :minute, 
-              hide_label: true,
-              placeholder: 'mm',
-              min: 0, 
-              step: 15 %>
-          </div>
-
-          <div class="d-flex w-50 h-100" id="<%= form.object_name %>-input-<%=:am_pm%>">
-              <% ['AM', 'PM'].each do |time| %>
-                <div class="flex-fill text-center cursor-pointer form-control
-                  <%= time == 'AM' ? 'rounded-end-0 border-end-0' : 'rounded-start-0' %>"
-                  data-ice-time-selector-target="time"
-                  data-time="<%= time %>"
-                  data-action="click->ice-time-selector#selectTime">
-                  <%= time %>
-                  <% puts "time: #{time == 'PM'}" %>
-                  <%= radio_button_tag "ice_time[am_pm]", time, time =='PM', class: "d-none" %>
-                </div>
-              <% end %>
-          </div>
-        </div>
-      </div>
-      
-      <div class="d-flex justify-content-between">
-        <div class="form-group w-25" id="<%= form.object_name %>-input-<%=:length%>">
-          <%= form.number_field :length,
-            class: "form-control",
+    <div class="form-group d-flex flex-column gap-0" id="<%= form.object_name %>-input">
+      <label class="form-label mb-0">Start Time</label>
+      <div class="d-flex justify-content-start align-content-center gap-1"> 
+        <div class="w-25" id="<%= form.object_name %>-input-<%=:hour%>">
+          <%= form.number_field :hour, 
             hide_label: true,
-            placeholder: 'mm',
-            min: 0,
+            placeholder: 'hour',
+            min: 0, 
+            step: 1 %>
+        </div>
+        <span class="py-1">:</span>
+
+        <div class="w-25" id="<%= form.object_name %>-input-<%=:minute%>">
+          <%= form.number_field :minute, 
+            hide_label: true,
+            placeholder: 'min',
+            min: 0, 
             step: 15 %>
         </div>
-        <div class="form-group">
-          <button type="submit" class="btn border rounded-circle">
-            <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
-          </button>
+
+        <div class="d-flex w-50 h-100" id="<%= form.object_name %>-input-<%=:am_pm%>">
+            <% ['AM', 'PM'].each do |time| %>
+              <div class="flex-fill text-center cursor-pointer form-control
+                <%= time == 'AM' ? 'rounded-end-0 border-end-0' : 'rounded-start-0' %>"
+                data-ice-time-selector-target="time"
+                data-time="<%= time %>"
+                data-action="click->ice-time-selector#selectTime">
+                <%= time %>
+                <%= radio_button_tag "ice_time[am_pm]", time, time =='PM', class: "d-none" %>
+              </div>
+            <% end %>
         </div>
       </div>
+    </div>
     
-      <div class="form-group hidden">
-        <%= form.hidden_field :team_id %>
-      </div>
+    <div class="form-group w-25" id="<%= form.object_name %>-input-<%=:length%>">
+      <%= form.number_field :length,
+        class: "form-control",
+        hide_label: true,
+        placeholder: 'min',
+        min: 0,
+        step: 15 %>
+    </div>
 
+    <div class="form-group hidden">
+      <%= form.hidden_field :team_id %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="d-flex justify-content-between align-items-center">
+      <%= form.select :address_id, @addresses.map { |address| [address.name, address.id] }, 
+          { prompt: "Select an address" }, 
+          { class: "form-control" } %>
+      <%= link_to new_address_path, 
+          class: "btn text-muted ms-2",
+          data: { turbo_frame: "new_address" } do %>
+        <%= inline_svg_tag 'plus.svg', class: 'v-100 h-100' %>
+      <% end %>
+    </div>
+  </div>
+
+  <%= turbo_frame_tag "new_address" %>
+
+  <div class="d-flex justify-content-between mt-3">
+    <%= link_to ice_times_path, class: "btn" do %>
+      <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
+    <% end %>
+    <div class="form-group">
+      <button type="submit" class="btn">
+        <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
+      </button>
     </div>
   </div>
 <% end %>

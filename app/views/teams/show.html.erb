@@ -1,31 +1,25 @@
 <%= turbo_frame_tag dom_id(@team) do %>
-  <div class="mt-4 mx-auto w-75">
-    <div class="bg-white py-4 px-4 shadow rounded">
-      <div class="d-flex align-items-center">
+  <div class="mt-4 mx-auto">    
+    <%= render 'shared/card' do %>
+      <div class="d-flex align-items-center mb-3">
         <%= image_tag team_logo(@team), class: "rounded w-25" %>
         <div>
-            <h5 class="mb-1">Team Details</h5>
+          <h5 class="mb-1"><%= @team.name %></h5>
         </div>
       </div>
       <div>
-          <p class="text-muted mb-0">Record: 10 - 12 - 3</p>
-          <p class="text-muted mb-0">Arena: Village Square</p>
-          <p class="text-muted mb-0">Ice Time: 10:00pm Monday</p>
-          <p class="text-muted mb-0">Notes: <%= strip_tags(BetterLorem.p(1, false)) %></p>
-        </div>
+        <p class="text-muted mb-0">Record: 10 - 12 - 3</p>
+        <p class="text-muted mb-0">Arena: Village Square</p>
+        <p class="text-muted mb-0">Ice Time: 10:00pm Monday</p>
+        <p class="text-muted mb-0">Notes: <%= strip_tags(BetterLorem.p(1, false)) %></p>
       </div>
 
-      <div class="d-flex justify-content-between">
-        <%= link_to teams_path,  class: "btn" do %>
+      <div class="d-flex justify-content-between mt-3">
+        <%= link_to teams_path, class: "btn" do %>
           <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
         <% end %>
-        <%= button_to team_path(@team), 
-            method: :delete, 
-            class: "btn",
-            form: { data: { turbo_confirm: "Are you sure?" } } do %>
-          <%= inline_svg_tag 'trash.svg', class: 'v-100 h-100' %>
-        <% end %>
+        <%= render 'teams/actions', team: @team %>
       </div>
-    </div>
+    <% end %>
   </div>
 <% end %>

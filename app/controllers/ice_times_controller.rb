@@ -13,11 +13,13 @@ class IceTimesController < ApplicationController
   # GET /ice_times/new
   def new
     @teams = current_user.memberships
+    @addresses = Address.all
     @ice_time = IceTime.new
   end
 
   # GET /ice_times/1/edit
   def edit
+    @addresses = Address.all
   end
 
   # POST /ice_times or /ice_times.json
@@ -26,9 +28,20 @@ class IceTimesController < ApplicationController
 
     respond_to do |format|
       if @ice_time.save
+        format.turbo_stream { 
+          render turbo_stream: [
+            turbo_stream.replace("new_ice_time", partial: "ice_times/ice_time", locals: { ice_time: @ice_time }),
+            turbo_stream.replace("ice_times", partial: "ice_times/ice_times", locals: { ice_times: IceTime.all })
+          ]
+        }
         format.html { redirect_to @ice_time, notice: "Ice time was successfully created." }
         format.json { render :show, status: :created, location: @ice_time }
       else
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace("new_ice_time", 
+            partial: "ice_times/form", 
+            locals: { ice_time: @ice_time })
+        }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @ice_time.errors, status: :unprocessable_entity }
       end
@@ -39,9 +52,19 @@ class IceTimesController < ApplicationController
   def update
     respond_to do |format|
       if @ice_time.update(ice_time_params)
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(dom_id(@ice_time),
+            partial: "ice_times/ice_time",
+            locals: { ice_time: @ice_time })
+        }
         format.html { redirect_to @ice_time, notice: "Ice time was successfully updated." }
         format.json { render :show, status: :ok, location: @ice_time }
       else
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(dom_id(@ice_time),
+            partial: "ice_times/form",
+            locals: { ice_time: @ice_time })
+        }
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @ice_time.errors, status: :unprocessable_entity }
       end
@@ -53,6 +76,9 @@ class IceTimesController < ApplicationController
     @ice_time.destroy!
 
     respond_to do |format|
+      format.turbo_stream { 
+        render turbo_stream: turbo_stream.remove(@ice_time)
+      }
       format.html { redirect_to ice_times_path, status: :see_other, notice: "Ice time was successfully destroyed." }
       format.json { head :no_content }
     end
@@ -66,6 +92,6 @@ class IceTimesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def ice_time_params
-      params.require(:ice_time).permit(:day, :ice_time, :length, :team_id)
+      params.require(:ice_time).permit(:day, :ice_time, :length, :team_id, :address_id)
     end
 end

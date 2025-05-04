@@ -36,7 +36,7 @@ class TeamsController < ApplicationController
             turbo_stream.replace("teams", partial: "teams/teams", locals: { teams: Team.all })
           ]
         }
-        format.html { redirect_to team_url(@team), notice: "Team was successfully created." }
+        format.html { redirect_to @team, notice: "Team was successfully created." }
         format.json { render :show, status: :created, location: @team }
       else
         format.turbo_stream {
@@ -59,7 +59,7 @@ class TeamsController < ApplicationController
             partial: "teams/team",
             locals: { team: @team })
         }
-        format.html { redirect_to team_url(@team), notice: "Team was successfully updated." }
+        format.html { redirect_to @team, notice: "Team was successfully updated." }
         format.json { render :show, status: :ok, location: @team }
       else
         format.turbo_stream {
@@ -78,7 +78,10 @@ class TeamsController < ApplicationController
     @team.destroy!
 
     respond_to do |format|
-      format.html { redirect_to teams_url, notice: "Team was successfully destroyed." }
+      format.turbo_stream { 
+        render turbo_stream: turbo_stream.remove(@team)
+      }
+      format.html { redirect_to teams_path, status: :see_other, notice: "Team was successfully destroyed." }
       format.json { head :no_content }
     end
   end

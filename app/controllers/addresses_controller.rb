@@ -17,6 +17,14 @@ class AddressesController < ApplicationController
   # GET /addresses/new
   def new
     @address = Address.new
+    respond_to do |format|
+      format.html
+      format.turbo_stream { 
+        render turbo_stream: turbo_stream.replace("new_address", 
+          partial: "addresses/form", 
+          locals: { address: @address, show_back: false }) 
+      }
+    end
   end
 
   # GET /addresses/1/edit
@@ -30,9 +38,22 @@ class AddressesController < ApplicationController
     respond_to do |format|
       if @address.save
         attach_map_image(@address)
+        format.turbo_stream { 
+          render turbo_stream: [
+            turbo_stream.replace("new_address", ""),
+            turbo_stream.update("ice_time_address_id", 
+              partial: "addresses/select", 
+              locals: { addresses: Address.all, ice_time: @ice_time })
+          ]
+        }
         format.html { redirect_to address_url(@address), notice: "Address was successfully created." }
         format.json { render :show, status: :created, location: @address }
       else
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace("new_address", 
+            partial: "addresses/form", 
+            locals: { address: @address, show_back: false })
+        }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @address.errors, status: :unprocessable_entity }
       end

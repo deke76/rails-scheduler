@@ -27,3 +27,6 @@ application.register("hello", HelloController)
 
 import NavigationController from "./navigation_controller"
 application.register("navigation", NavigationController)
+
+import AddressController from "./address_controller"
+application.register("address", AddressController)

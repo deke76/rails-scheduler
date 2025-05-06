@@ -12,7 +12,7 @@
     
   <div data-controller="ice-time-selector">
     <div class="form-group mb-3">
-      <div class="d-flex border rounded">
+      <div class="d-flex border rounded bg-white">
         <% IceTime::VALID_DAYS.each do |day| %>
           <div class="flex-fill text-center border-end py-2 cursor-pointer" 
             data-ice-time-selector-target="day"
@@ -60,30 +60,31 @@
       </div>
     </div>
     
-    <div class="form-group w-25" id="<%= form.object_name %>-input-<%=:length%>">
-      <%= form.number_field :length,
-        class: "form-control",
-        hide_label: true,
-        placeholder: 'min',
-        min: 0,
-        step: 15 %>
+    <div class="d-flex gap-0">
+      <div class="form-group w-25 me-1" id="<%= form.object_name %>-input-<%=:length%>">
+        <%= form.number_field :length,
+          class: "form-control",
+          hide_label: true,
+          placeholder: 'min',
+          min: 0,
+          step: 15 %>
+      </div>
+      <span>&nbsp;</span>
+      <div class="form-group w-75" data-controller="team">
+        <div id="ice_time_team_id">
+          <%= render "teams/select", teams: @teams %>
+        </div>
+      </div>
     </div>
+    <%= turbo_frame_tag "new_team" %>
 
-    <div class="form-group hidden">
-      <%= form.hidden_field :team_id %>
-    </div>
   </div>
 
-  <div class="form-group">
-    <div class="d-flex justify-content-between align-items-center">
-      <%= form.select :address_id, @addresses.map { |address| [address.name, address.id] }, 
-          { prompt: "Select an address" }, 
-          { class: "form-control" } %>
-      <%= link_to new_address_path, 
-          class: "btn text-muted ms-2",
-          data: { turbo_frame: "new_address" } do %>
-        <%= inline_svg_tag 'plus.svg', class: 'v-100 h-100' %>
-      <% end %>
+
+
+  <div class="form-group" data-controller="address">
+    <div id="ice_time_address_id">
+      <%= render "addresses/select", addresses: @addresses %>
     </div>
   </div>
 

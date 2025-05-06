@@ -37,8 +37,10 @@
     <%= form.hidden_field :map_image_url, data: { address_autocomplete_target: "mapImageUrl" } %>
 
     <div class="d-flex justify-content-between">
-      <%= link_to addresses_path, class: "btn" do %>
-        <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
+      <% if local_assigns[:show_back] != false %>
+        <%= link_to addresses_path, class: "btn" do %>
+          <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
+        <% end %>
       <% end %>
       <div class="form-group">
         <button type="submit" class="btn">

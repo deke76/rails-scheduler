@@ -1,0 +1,30 @@
+<div class="position-relative" data-controller="address">
+  <div class="dropdown">
+    <button class="form-control dropdown-toggle d-flex justify-content-between align-items-center" 
+            type="button" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false"
+            data-address-target="button">
+      <span class="text-truncate"><%= @ice_time&.address&.name || "Select an address..." %></span>
+      </button>
+    <ul class="dropdown-menu w-100" data-address-target="menu">
+      <li>
+        <%= link_to "Add new address...", "#", 
+            class: "dropdown-item", 
+            data: { action: "click->address#handleNewAddress" } %>
+      </li>
+      <li><hr class="dropdown-divider"></li>
+      <% addresses.each do |address| %>
+        <li>
+          <%= link_to address.name, "#", 
+              class: "dropdown-item #{'active' if @ice_time&.address_id == address.id}",
+              data: { 
+                action: "click->address#handleAddressSelect",
+                address_id: address.id
+              } %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <%= hidden_field_tag "ice_time[address_id]", @ice_time&.address_id %>
+</div> 

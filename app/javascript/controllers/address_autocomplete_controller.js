@@ -7,18 +7,26 @@ export default class extends Controller {
   connect() {
     this.boundHandleKeyUp = this.handleKeyUp.bind(this)
     this.autocompleteTarget.addEventListener("keyup", this.boundHandleKeyUp)
+    this.debounceTimeout = null
   }
 
   disconnect() {
     this.autocompleteTarget.removeEventListener("keyup", this.boundHandleKeyUp)
+    if (this.debounceTimeout) clearTimeout(this.debounceTimeout)
   }
 
   async handleKeyUp(event) {
     const query = event.target.value
+    if (this.debounceTimeout) clearTimeout(this.debounceTimeout)
+
     if (query.length >= 3) {
-      this.fetchSuggestions(query)
+      this.debounceTimeout = setTimeout(() => {
+        this.fetchSuggestions(query)
+      }, 300) // 300ms delay
     } else {
-      this.resultsTarget.innerHTML = ""
+      this.debounceTimeout = setTimeout(() => {
+        this.resultsTarget.innerHTML = ""
+      }, 300) // 300ms delay
     }
   }
 
@@ -49,9 +57,9 @@ export default class extends Controller {
 
     // Update hidden fields with address components
     if (this.hasStreetNumberTarget) this.streetNumberTarget.value = address.house_number || ""
-    if (this.hasRouteTarget) this.routeTarget.value = address.road || ""
-    if (this.hasLocalityTarget) this.localityTarget.value = address.city || ""
-    if (this.hasAdministrativeAreaTarget) this.administrativeAreaTarget.value = address.state || ""
+    if (this.hasRouteTarget) this.routeTarget.value = address.street || ""
+    if (this.hasLocalityTarget) this.localityTarget.value = address.locality || ""
+    if (this.hasAdministrativeAreaTarget) this.administrativeAreaTarget.value = address.administrative_area_level_1 || ""
     if (this.hasCountryTarget) this.countryTarget.value = address.country || ""
     if (this.hasPostalCodeTarget) this.postalCodeTarget.value = address.postcode || ""
 

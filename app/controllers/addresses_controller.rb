@@ -109,6 +109,7 @@ class AddressesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def address_params
+      binding.pry
       params.fetch(:address, {}).permit(
         :name,
         :unit_number,
@@ -118,13 +119,31 @@ class AddressesController < ApplicationController
         :country_name,
         :province,
         :postal_code,
+        :route,
+        :country,
+        :map_image_url
       )
     end
 
     def osm_search(query)
       url = URI("https://nominatim.openstreetmap.org/search?q=#{CGI.escape(query)}&format=json&addressdetails=1&limit=5")
       response = Net::HTTP.get(url)
-      JSON.parse(response)
+      results = JSON.parse(response)
+
+      # Transform the results to ensure consistent structure
+      results.map do |result|
+        {
+          display_name: result["display_name"],
+          address: {
+            house_number: result.dig("address", "house_number") || "",
+            road: result.dig("address", "road") || "",
+            city: result.dig("address", "city") || "",
+            state: result.dig("address", "state") || "",
+            country: result.dig("address", "country") || "",
+            postcode: result.dig("address", "postcode") || ""
+          }
+        }
+      end
     end
 
     def google_places_search(query)

@@ -28,13 +28,17 @@
       <% end %>
     </div>
 
+    <%# Hidden fields for address components %>
+    <%= form.hidden_field :name, data: { address_autocomplete_target: "name" } %>
+    <%= form.hidden_field :unit_number, data: { address_autocomplete_target: "unitNumber" } %>
     <%= form.hidden_field :street_number, id: "street_number", data: { address_autocomplete_target: "streetNumber" } %>
-    <%= form.hidden_field :route, id: "route", data: { address_autocomplete_target: "route" } %>
-    <%= form.hidden_field :locality, id: "locality", data: { address_autocomplete_target: "locality" } %>
-    <%= form.hidden_field :administrative_area_level_1, id: "administrative_area_level_1", data: { address_autocomplete_target: "administrativeArea" } %>
+    <%= form.hidden_field :street, id: "street", data: { address_autocomplete_target: "street" } %>
+    <%= form.hidden_field :city, id: "city", data: { address_autocomplete_target: "city" } %>
+    <%= form.hidden_field :province, id: "province", data: { address_autocomplete_target: "province" } %>
     <%= form.hidden_field :country, id: "country", data: { address_autocomplete_target: "country" } %>
     <%= form.hidden_field :postal_code, id: "postal_code", data: { address_autocomplete_target: "postalCode" } %>
-    <%= form.hidden_field :map_image_url, data: { address_autocomplete_target: "mapImageUrl" } %>
+    <%= form.hidden_field :latitude, data: { address_autocomplete_target: "latitude" } %>
+    <%= form.hidden_field :longitude, data: { address_autocomplete_target: "longitude" } %>
 
     <div class="d-flex justify-content-between">
       <% if local_assigns[:show_back] != false %>

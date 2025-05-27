@@ -8,6 +8,7 @@ class AddressesController < ApplicationController
   # GET /addresses or /addresses.json
   def index
     @addresses = Address.all
+    @address = Address.new
   end
 
   # GET /addresses/1 or /addresses/1.json
@@ -19,11 +20,7 @@ class AddressesController < ApplicationController
     @address = Address.new
     respond_to do |format|
       format.html
-      format.turbo_stream { 
-        render turbo_stream: turbo_stream.replace("new_address", 
-          partial: "addresses/form", 
-          locals: { address: @address, show_back: false }) 
-      }
+      format.turbo_stream
     end
   end
 
@@ -38,24 +35,25 @@ class AddressesController < ApplicationController
     respond_to do |format|
       if @address.save
         attach_map_image(@address)
+        format.html { redirect_to addresses_path, notice: "Address was successfully created." }
+        format.json { render :show, status: :created, location: @address }
         format.turbo_stream { 
           render turbo_stream: [
-            turbo_stream.replace("new_address", ""),
+            turbo_stream.update("new_address", ""),
+            turbo_stream.append("addresses", partial: "addresses/address", locals: { address: @address }),
             turbo_stream.update("ice_time_address_id", 
               partial: "addresses/select", 
               locals: { addresses: Address.all, ice_time: @ice_time })
           ]
         }
-        format.html { redirect_to address_url(@address), notice: "Address was successfully created." }
-        format.json { render :show, status: :created, location: @address }
       else
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace("new_address", 
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @address.errors, status: :unprocessable_entity }
+        format.turbo_stream { 
+          render turbo_stream: turbo_stream.update("new_address", 
             partial: "addresses/form", 
             locals: { address: @address, show_back: false })
         }
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @address.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -81,6 +79,9 @@ class AddressesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to addresses_url, notice: "Address was successfully destroyed." }
       format.json { head :no_content }
+      format.turbo_stream { 
+        render turbo_stream: turbo_stream.remove(@address)
+      }
     end
   end
 
@@ -109,20 +110,7 @@ class AddressesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def address_params
-      binding.pry
-      params.fetch(:address, {}).permit(
-        :name,
-        :unit_number,
-        :street_number,
-        :street,
-        :city,
-        :country_name,
-        :province,
-        :postal_code,
-        :route,
-        :country,
-        :map_image_url
-      )
+      params.require(:address).permit(:name, :unit_number, :street_number, :street, :city, :province, :country, :postal_code, :latitude, :longitude)
     end
 
     def osm_search(query)
@@ -130,20 +118,26 @@ class AddressesController < ApplicationController
       response = Net::HTTP.get(url)
       results = JSON.parse(response)
 
-      # Transform the results to ensure consistent structure
-      results.map do |result|
+      pp "Raw API Response:", results
+
+      transformed = results.map do |result|
+        address = result["address"] || {}
         {
-          display_name: result["display_name"],
+          display_name: result["name"],
           address: {
-            house_number: result.dig("address", "house_number") || "",
-            road: result.dig("address", "road") || "",
-            city: result.dig("address", "city") || "",
-            state: result.dig("address", "state") || "",
-            country: result.dig("address", "country") || "",
-            postcode: result.dig("address", "postcode") || ""
+            street_number: address["house_number"] || "",
+            street: address["road"] || "",
+            city: address["city"] || address["town"] || address["village"] || address["hamlet"] || "",
+            province: address["state"] || address["state_district"] || address["region"] || "",
+            country: address["country"] || "",
+            postal_code: address["postcode"] || "",
+            latitude: result["lat"],
+            longitude: result["lon"]
           }
         }
       end
+      pp "Transformed Data:", transformed
+      transformed
     end
 
     def google_places_search(query)

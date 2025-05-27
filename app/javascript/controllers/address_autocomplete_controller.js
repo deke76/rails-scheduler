@@ -2,9 +2,22 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="address-autocomplete"
 export default class extends Controller {
-  static targets = ["autocomplete", "results", "streetNumber", "route", "locality", "administrativeArea", "country", "postalCode"]
+  static targets = [
+    "autocomplete", 
+    "results", 
+    "streetNumber", 
+    "street", 
+    "city", 
+    "province", 
+    "country", 
+    "postalCode",
+    "latitude",
+    "longitude",
+    "name"
+  ]
 
   connect() {
+    console.log("Address Autocomplete Controller Connected")
     this.boundHandleKeyUp = this.handleKeyUp.bind(this)
     this.autocompleteTarget.addEventListener("keyup", this.boundHandleKeyUp)
     this.debounceTimeout = null
@@ -32,6 +45,7 @@ export default class extends Controller {
 
   async fetchSuggestions(query) {
     try {
+      console.log("Fetching suggestions for:", query)
       const response = await fetch(`/addresses/autocomplete?query=${encodeURIComponent(query)}`, {
         headers: {
           "Accept": "text/vnd.turbo-stream.html"
@@ -41,6 +55,7 @@ export default class extends Controller {
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
       
       const html = await response.text()
+      console.log("Received HTML response:", html)
       this.resultsTarget.innerHTML = html
     } catch (error) {
       console.error("Error fetching autocomplete suggestions:", error)
@@ -56,12 +71,33 @@ export default class extends Controller {
     this.autocompleteTarget.value = addressData.display_name
 
     // Update hidden fields with address components
-    if (this.hasStreetNumberTarget) this.streetNumberTarget.value = address.house_number || ""
-    if (this.hasRouteTarget) this.routeTarget.value = address.street || ""
-    if (this.hasLocalityTarget) this.localityTarget.value = address.locality || ""
-    if (this.hasAdministrativeAreaTarget) this.administrativeAreaTarget.value = address.administrative_area_level_1 || ""
-    if (this.hasCountryTarget) this.countryTarget.value = address.country || ""
-    if (this.hasPostalCodeTarget) this.postalCodeTarget.value = address.postcode || ""
+    if (this.hasNameTarget) {
+      this.nameTarget.value = addressData.display_name || ""
+    }
+    if (this.hasStreetNumberTarget) {
+      this.streetNumberTarget.value = address.street_number || ""
+    }
+    if (this.hasStreetTarget) {
+      this.streetTarget.value = address.street || ""
+    }
+    if (this.hasCityTarget) {
+      this.cityTarget.value = address.city || ""
+    }
+    if (this.hasProvinceTarget) {
+      this.provinceTarget.value = address.province || ""
+    }
+    if (this.hasCountryTarget) {
+      this.countryTarget.value = address.country || ""
+    }
+    if (this.hasPostalCodeTarget) {
+      this.postalCodeTarget.value = address.postal_code || ""
+    }
+    if (this.hasLatitudeTarget) {
+      this.latitudeTarget.value = address.latitude || ""
+    }
+    if (this.hasLongitudeTarget) {
+      this.longitudeTarget.value = address.longitude || ""
+    }
 
     // Clear the results
     this.resultsTarget.innerHTML = ""

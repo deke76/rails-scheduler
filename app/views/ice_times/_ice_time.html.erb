@@ -10,14 +10,7 @@
           Length: <%= ice_time.length %> minutes
         </p>
       </div>
-      <div class="d-flex gap-2">
-        <%= link_to edit_ice_time_path(ice_time), class: "text-muted" do %>
-          <%= inline_svg_tag 'edit.svg', class: 'v-100 h-100' %>
-        <% end %>
-        <%= button_to ice_time_path(ice_time), method: :delete, class: "text-muted border-0 bg-transparent p-0", form: { data: { turbo_confirm: "Are you sure?" } } do %>
-          <%= inline_svg_tag 'trash.svg', class: 'v-100 h-100' %>
-        <% end %>
-      </div>
+      
     </div>
   </div>
 </div>

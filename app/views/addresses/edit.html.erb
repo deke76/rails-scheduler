@@ -1,10 +1,5 @@
-<h1>Editing address</h1>
-
-<%= render "form", address: @address %>
-
-<br>
-
-<div>
-  <%= link_to "Show this address", @address %> |
-  <%= link_to "Back to addresses", addresses_path %>
-</div>
+<%= turbo_frame_tag dom_id(@address) do %>
+    <%= render 'shared/card' do %>
+      <%= render "form", address: @address %>
+    <% end %>
+<% end %>

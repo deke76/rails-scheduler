@@ -26,6 +26,10 @@ class AddressesController < ApplicationController
 
   # GET /addresses/1/edit
   def edit
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   # POST /addresses or /addresses.json
@@ -65,9 +69,23 @@ class AddressesController < ApplicationController
         attach_map_image(@address)
         format.html { redirect_to address_url(@address), notice: "Address was successfully updated." }
         format.json { render :show, status: :ok, location: @address }
+        format.turbo_stream { 
+          render turbo_stream: turbo_stream.replace(
+            @address, 
+            partial: "addresses/address", 
+            locals: { address: @address }
+          )
+        }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @address.errors, status: :unprocessable_entity }
+        format.turbo_stream { 
+          render turbo_stream: turbo_stream.replace(
+            dom_id(@address), 
+            partial: "addresses/edit", 
+            locals: { address: @address }
+          )
+        }
       end
     end
   end

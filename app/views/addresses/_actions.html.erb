@@ -1,6 +1,7 @@
 <div class="d-flex align-items-center">
   <%= button_to edit_address_path(address), 
-      class: "btn me-0" do %>
+      class: "btn me-0",
+      form: { data: { turbo_frame: dom_id(address) } } do %>
     <%= inline_svg_tag 'edit.svg', class: 'v-100 h-100' %>
   <% end %>
   <%= button_to address_path(address), 

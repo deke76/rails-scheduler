@@ -1,5 +1,4 @@
-<%= render "shared/header" %>
-
 <%= turbo_frame_tag "new_#{controller.controller_name.singularize}" %>
 <%= render "#{controller.controller_name}/#{controller.controller_name}", 
-    controller.controller_name.pluralize.to_sym => instance_variable_get("@#{controller.controller_name.pluralize}") %> 
+   controller.controller_name.pluralize.to_sym => instance_variable_get("@#{controller.controller_name.pluralize}") 
+%> 

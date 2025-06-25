@@ -1,9 +1,13 @@
 <div class="position-relative" data-controller="address">
   <div class="dropdown">
-    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-address-target="button">
-      <span>Select an address</span>
+    <button class="form-control dropdown-toggle d-flex justify-content-between align-items-center" 
+            type="button" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false"
+            data-address-target="button">
+      <span class="text-truncate"><%= @ice_time&.address&.name || "Select an address..." %></span>
     </button>
-    <ul class="dropdown-menu" data-address-target="menu">
+    <ul class="dropdown-menu w-100" data-address-target="menu">
       <% addresses.each do |address| %>
         <li>
           <button class="dropdown-item" 

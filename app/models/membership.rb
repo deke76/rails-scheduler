@@ -1,5 +1,6 @@
 class Membership < ApplicationRecord
   belongs_to :user
+  belongs_to :team
   
   enum role: { owner: 0, admin: 1, player: 2 }
 

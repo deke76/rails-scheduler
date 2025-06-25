@@ -22,6 +22,9 @@ application.register("example", ExampleController)
 import FormUploadController from "./form_upload_controller"
 application.register("form-upload", FormUploadController)
 
+import FormController from "./form_controller"
+application.register("form", FormController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
@@ -30,3 +33,9 @@ application.register("navigation", NavigationController)
 
 import AddressController from "./address_controller"
 application.register("address", AddressController)
+
+import TeamController from "./team_controller"
+application.register("team", TeamController)
+
+import FabController from "./fab_controller"
+application.register("fab", FabController)

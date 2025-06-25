@@ -17,7 +17,7 @@ class IceTimesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create ice_time" do
     assert_difference("IceTime.count") do
-      post ice_times_url, params: { ice_time: { day: @ice_time.day, ice_time: @ice_time.ice_time, length: @ice_time.length, team_id: @ice_time.team_id } }
+      post ice_times_url, params: { ice_time: { day: @ice_time.day, start_time: @ice_time.start_time, length: @ice_time.length, team_id: @ice_time.team_id } }
     end
 
     assert_redirected_to ice_time_url(IceTime.last)
@@ -34,7 +34,7 @@ class IceTimesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update ice_time" do
-    patch ice_time_url(@ice_time), params: { ice_time: { day: @ice_time.day, ice_time: @ice_time.ice_time, length: @ice_time.length, team_id: @ice_time.team_id } }
+    patch ice_time_url(@ice_time), params: { ice_time: { day: @ice_time.day, start_time: @ice_time.start_time, length: @ice_time.length, team_id: @ice_time.team_id } }
     assert_redirected_to ice_time_url(@ice_time)
   end
 

@@ -1,21 +1,13 @@
-<div id="<%= dom_id(team) %>" class="card mb-2 bg-light">
-  <%= link_to team_path(team), class: "text-decoration-none text-dark" do %>
-  <div class="card-body d-flex flex-column justify-content-between align-items-center">
-    <div class="d-flex align-items-center">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-          <%= image_tag team_logo(team), class: "rounded me-3 w-25" %>
-          <h5 class="card-title mb-0"><%= team.name %></h5>
+<div id="<%= dom_id(team) %>">
+  <%= turbo_frame_tag dom_id(team) do %>
+    <%= link_to team_path(team), class: "text-decoration-none text-dark" do %>
+      <%= render 'shared/card' do %>
+        <div class="d-flex flex-row align-items-center">
+          <%= image_tag team_logo(team), class: "rounded w-25 mb-2" %>
+          <h5 class="card-title text-center"><%= team.name %></h5>
         </div>
-        <%= render 'teams/actions', team: team %>
-      </div>
-    </div>
-    <small class="text-muted"><%= strip_tags(BetterLorem.p(1, false)) %></small>
-    
-    <div class="d-flex flex-column justify-content-around btn-group">
-      
-      
-    </div>
-    </div>
+        <small class="text-muted text-center d-block"><%= strip_tags(BetterLorem.p(1, false)) %></small>
+      <% end %>
+    <% end %>
   <% end %>
 </div>

@@ -1,29 +1,31 @@
-<div class="d-flex align-items-center w-full">
-  <%= link_to teams_path do %>
-    <%= inline_svg_tag 'users.svg', 
-      class: 'v-100 h-100' %>
-  <% end %>
-</div>
+<div class="d-flex align-items-center justify-content-end px-3 py-3 gap-4">
+  <div class="d-flex justify-content-end align-items-center w-full">
+    <%= link_to teams_path, class: "nav-link p-2 #{nav_active?(:teams) ? 'border border-primary rounded-circle' : ''}" do %>
+      <%= inline_svg_tag 'users.svg', 
+        class: 'v-100 h-100 text-primary' %>
+    <% end %>
+  </div>
 
-<div class="d-flex align-items-center w-full">
-  <%= link_to addresses_path do %>
-    <%= inline_svg_tag 'address.svg', 
-      class: 'v-100 h-100' %>
-  <% end %>
-</div>
+  <div class="d-flex align-items-center w-full">
+    <%= link_to addresses_path, class: "nav-link p-2 #{nav_active?(:addresses) ? 'border border-primary rounded-circle' : ''}" do %>
+      <%= inline_svg_tag 'address.svg', 
+        class: 'v-100 h-100 text-primary' %>
+    <% end %>
+  </div>
 
-<div class="d-flex align-items-center w-full">
-  <%= link_to ice_times_path do %>
-    <%= inline_svg_tag 'clock.svg', 
-      class: 'v-100 h-100 text-muted' %>
-  <% end %>
-</div>
+  <div class="d-flex align-items-center w-full">
+    <%= link_to ice_times_path, class: "nav-link p-2 #{nav_active?(:ice_times) ? 'border border-primary rounded-circle' : ''}" do %>
+      <%= inline_svg_tag 'clock.svg', 
+        class: 'v-100 h-100 text-primary' %>
+    <% end %>
+  </div>
 
-<div 
-  data-controller="navigation" 
-  class="d-flex align-items-center w-full pe-2"
-  id="optionsNavigationSettings"
-  data-action="navigation#click click@window->dropdown#hide">
-  <%= inline_svg_tag 'user.svg', 
-    class: 'v-100 h-100' %>
+  <div 
+    data-controller="navigation" 
+    class="d-flex align-items-center w-full pe-2"
+    id="optionsNavigationSettings"
+    data-action="navigation#click click@window->dropdown#hide">
+    <%= inline_svg_tag 'user.svg', 
+      class: 'v-100 h-100 text-primary' %>
+  </div>
 </div>

@@ -4,7 +4,7 @@
       <div>
         <h5 class="card-title mb-1"><%= ice_time.team.name %></h5>
         <p class="card-text text-muted mb-1">
-          <%= ice_time.day %> at <%= ice_time.ice_time.strftime("%I:%M %p") %>
+          <%= ice_time.day.titleize %> at <%= ice_time.start_time.strftime("%I:%M %p") %>
         </p>
         <p class="card-text text-muted mb-0">
           Length: <%= ice_time.length %> minutes

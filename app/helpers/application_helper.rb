@@ -28,4 +28,8 @@ module ApplicationHelper
       words.first(count).join(' ')
     end
   end
+
+  def nav_active?(controller_name)
+    controller.controller_name == controller_name.to_s
+  end
 end

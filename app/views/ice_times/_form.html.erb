@@ -1,4 +1,7 @@
-<%= bootstrap_form_with(model: @ice_time, data: { turbo: true }) do |form| %>
+<%= bootstrap_form_with(model: @ice_time, data: { 
+  turbo: true,
+  action: "turbo:submit-start->form#handleSubmit"
+}) do |form| %>
   <% if @ice_time.errors.any? %>
     <div class="alert alert-danger">
       <h4 class="alert-heading"><%= pluralize(@ice_time.errors.count, "error") %> prohibited this ice time from being saved:</h4>
@@ -70,7 +73,7 @@
           step: 15 %>
       </div>
       <span>&nbsp;</span>
-      <div class="form-group w-75" data-controller="team">
+      <div class="form-group w-75">
         <div id="ice_time_team_id">
           <%= render "teams/select", teams: @teams %>
         </div>
@@ -78,17 +81,25 @@
     </div>
     <%= turbo_frame_tag "new_team" %>
 
+    <div class="form-group" data-controller="address">
+      <div id="ice_time_address_id">
+        <%= render "addresses/select", addresses: @addresses %>
+      </div>
+    </div>
+
+    <%= turbo_frame_tag "new_address" %>
+
   </div>
 
-
-
-  <div class="form-group" data-controller="address">
-    <div id="ice_time_address_id">
-      <%= render "addresses/select", addresses: @addresses %>
+  <div class="d-flex justify-content-between mt-3">
+    <%= link_to ice_times_path, class: "btn" do %>
+      <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
+    <% end %>
+    <div class="form-group">
+      <button type="submit" class="btn">
+        <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
+      </button>
     </div>
   </div>
-
-  <%= turbo_frame_tag "new_address" %>
-
 
 <% end %>

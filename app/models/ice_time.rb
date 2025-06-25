@@ -7,7 +7,9 @@ class IceTime < ApplicationRecord
   VALID_DAYS = %w[sunday monday tuesday wednesday thursday friday saturday].freeze
 
   validates :day, inclusion: { in: VALID_DAYS }
-  validates :ice_time, presence: true
+  validates :hour, presence: true, numericality: { in: 1..12 }
+  validates :minute, presence: true, numericality: { in: 0..59 }
+  validates :am_pm, presence: true, inclusion: { in: %w[AM PM] }
   validates :length, presence: true, numericality: { greater_than: 0 }
   validates :team_id, presence: true
 

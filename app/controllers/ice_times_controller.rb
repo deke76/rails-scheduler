@@ -14,13 +14,13 @@ class IceTimesController < ApplicationController
   def new
     @ice_time = IceTime.new
     @addresses = Address.all
-    @teams = Team.all
+    @teams = current_user.teams
   end
 
   # GET /ice_times/1/edit
   def edit
     @addresses = Address.all
-    @teams = Team.all
+    @teams = current_user.teams
   end
 
   # POST /ice_times or /ice_times.json
@@ -39,7 +39,7 @@ class IceTimesController < ApplicationController
         format.json { render :show, status: :created, location: @ice_time }
       else
         @addresses = Address.all
-        @teams = Team.all
+        @teams = current_user.teams
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @ice_time.errors, status: :unprocessable_entity }
       end
@@ -61,7 +61,7 @@ class IceTimesController < ApplicationController
         format.json { render :show, status: :ok, location: @ice_time }
       else
         @addresses = Address.all
-        @teams = Team.all
+        @teams = current_user.teams
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @ice_time.errors, status: :unprocessable_entity }
       end

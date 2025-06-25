@@ -15,7 +15,7 @@ class IceTimesTest < ApplicationSystemTestCase
     click_on "New ice time"
 
     fill_in "Day", with: @ice_time.day
-    fill_in "Ice time", with: @ice_time.ice_time
+    fill_in "Start time", with: @ice_time.start_time
     fill_in "Length", with: @ice_time.length
     fill_in "Team", with: @ice_time.team_id
     click_on "Create Ice time"
@@ -29,7 +29,7 @@ class IceTimesTest < ApplicationSystemTestCase
     click_on "Edit this ice time", match: :first
 
     fill_in "Day", with: @ice_time.day
-    fill_in "Ice time", with: @ice_time.ice_time
+    fill_in "Start time", with: @ice_time.start_time
     fill_in "Length", with: @ice_time.length
     fill_in "Team", with: @ice_time.team_id
     click_on "Update Ice time"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_08_040802) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_27_032054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -66,7 +66,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_08_040802) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "address_id", null: false
+    t.uuid "opponent_id"
     t.index ["address_id"], name: "index_ice_times_on_address_id"
+    t.index ["opponent_id"], name: "index_ice_times_on_opponent_id"
     t.index ["team_id"], name: "index_ice_times_on_team_id"
     t.check_constraint "day::text = ANY (ARRAY['monday'::character varying, 'tuesday'::character varying, 'wednesday'::character varying, 'thursday'::character varying, 'friday'::character varying, 'saturday'::character varying, 'sunday'::character varying]::text[])"
   end
@@ -105,6 +107,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_08_040802) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "ice_times", "addresses"
   add_foreign_key "ice_times", "teams"
+  add_foreign_key "ice_times", "teams", column: "opponent_id"
   add_foreign_key "memberships", "teams"
   add_foreign_key "memberships", "users"
 end

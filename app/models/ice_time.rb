@@ -1,6 +1,7 @@
 class IceTime < ApplicationRecord
   belongs_to :team
   belongs_to :address
+  belongs_to :opponent, class_name: 'Team', optional: true
   before_save :set_start_time
   
   attr_accessor :hour, :minute, :am_pm

@@ -1,7 +1,7 @@
 <%= turbo_frame_tag dom_id(@team) do %>
     <%= render 'shared/card' do %>
       <div class="d-flex flex-row align-items-center">
-        <%= image_tag team_logo(@team), class: "rounded w-25 mb-2" %>
+        <%= image_tag team_logo(@team), class: "rounded w-25 mb-2 team-logo" %>
         <h5 class="card-title text-center"><%= @team.name %></h5>
       </div>
       <div>

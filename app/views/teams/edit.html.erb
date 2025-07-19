@@ -1,7 +1,5 @@
 <%= turbo_frame_tag dom_id(@team) do %>
   <div class="mt-4 mx-auto">
-    <%= render 'shared/page_header', title: 'Edit Team', back_path: team_path(@team) %>
-    
     <%= render 'shared/card' do %>
       <%= render "form", team: @team %>
     <% end %>

@@ -32,8 +32,9 @@ class TeamsController < ApplicationController
         
         format.turbo_stream { 
           render turbo_stream: [
-            turbo_stream.replace("new_team", partial: "teams/team", locals: { team: @team }),
-            turbo_stream.replace("teams", partial: "teams/teams", locals: { teams: Team.all })
+            turbo_stream.replace("new_team", '<turbo-frame id="new_team"></turbo-frame>'),
+            turbo_stream.prepend("teams", partial: "teams/team", locals: { team: @team }),
+            turbo_stream.update("fab", '<script>document.getElementById("fab").style.display = "block";</script>')
           ]
         }
         format.html { redirect_to @team, notice: "Team was successfully created." }

@@ -7,7 +7,7 @@
     "@popperjs/core": "^2.11.8",
     "@stimulus-components/dropdown": "^3.0.0",
     "autoprefixer": "^10.4.19",
-    "bootstrap": "^5.3.3",
+    "bootstrap": "^5.4.0",
     "bootstrap-icons": "^1.11.3",
     "cable_ready": "5.0.5",
     "esbuild": "^0.22.0",

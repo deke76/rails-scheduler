@@ -1,0 +1,23 @@
+<%= turbo_frame_tag "address_autocomplete_results" do %>
+  <div class="list-group mt-2" data-address-autocomplete-target="results">
+    <% addresses.each do |address| %>
+      <button type="button" 
+              class="list-group-item list-group-item-action"
+              data-action="click->address-autocomplete#selectAddress"
+              data-address-value="<%= address.to_json %>">
+        <div class="d-flex w-100 justify-content-between">
+          <h6 class="mb-1"><%= address[:display_name] %></h6>
+        </div>
+        <small class="text-muted">
+          <%= [
+            address[:address][:street_number],
+            address[:address][:street],
+            address[:address][:city],
+            address[:address][:province],
+            address[:address][:country]
+          ].compact.join(", ") %>
+        </small>
+      </button>
+    <% end %>
+  </div>
+<% end %> 

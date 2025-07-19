@@ -1,3 +1,4 @@
+
 {
   "name": "app",
   "private": true,
@@ -10,6 +11,7 @@
     "bootstrap": "^5.4.0",
     "bootstrap-icons": "^1.11.3",
     "cable_ready": "5.0.5",
+    "caniuse-lite": "^1.0.30001707",
     "esbuild": "^0.22.0",
     "esbuild-rails": "^1.0.7",
     "hotkeys-js": "^3.13.9",
@@ -23,7 +25,7 @@
   },
   "scripts": {
     "build": "node esbuild.config.mjs",
-    "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --quiet",
     "build:css:prefix": "postcss ./app/assets/builds/application.css --use=autoprefixer --output=./app/assets/builds/application.css",
     "build:css": "yarn build:css:compile && yarn build:css:prefix",
     "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\"",

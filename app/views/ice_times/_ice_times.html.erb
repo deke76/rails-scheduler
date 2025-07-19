@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "ice_times" do %>
+  <% @ice_times.each do |ice_time| %>
+    <%= turbo_frame_tag dom_id(ice_time) do %>
+      <%= link_to ice_time, class: "text-decoration-none" do %>
+        <%= render ice_time %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

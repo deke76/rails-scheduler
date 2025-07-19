@@ -1,10 +1,10 @@
-<h1>Editing team</h1>
+<%= turbo_frame_tag dom_id(@team) do %>
+  <div class="mt-4 mx-auto">
+    <%= render 'shared/page_header', title: 'Edit Team', back_path: team_path(@team) %>
+    
+    <%= render 'shared/card' do %>
+      <%= render "form", team: @team %>
+    <% end %>
+  </div>
+<% end %>
 
-<%= render "form", team: @team %>
-
-<br>
-
-<div>
-  <%= link_to "Show this team", @team %> |
-  <%= link_to "Back to teams", teams_path %>
-</div>

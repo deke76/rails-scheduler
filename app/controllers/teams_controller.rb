@@ -21,7 +21,6 @@ class TeamsController < ApplicationController
 
   # POST /teams or /teams.json
   def create
-    puts "team_params: #{team_params}"
     @team = Team.new(team_params)
     
     respond_to do |format|
@@ -30,9 +29,21 @@ class TeamsController < ApplicationController
           user_id: current_user.id, 
           team_id: @team.id, 
           role: :owner)
-        format.html { redirect_to team_url(@team), notice: "Team was successfully created." }
+        
+        format.turbo_stream { 
+          render turbo_stream: [
+            turbo_stream.replace("new_team", partial: "teams/team", locals: { team: @team }),
+            turbo_stream.replace("teams", partial: "teams/teams", locals: { teams: Team.all })
+          ]
+        }
+        format.html { redirect_to @team, notice: "Team was successfully created." }
         format.json { render :show, status: :created, location: @team }
       else
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace("new_team", 
+            partial: "teams/form", 
+            locals: { team: @team })
+        }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end
@@ -43,9 +54,19 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
-        format.html { redirect_to team_url(@team), notice: "Team was successfully updated." }
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(dom_id(@team),
+            partial: "teams/team",
+            locals: { team: @team })
+        }
+        format.html { redirect_to @team, notice: "Team was successfully updated." }
         format.json { render :show, status: :ok, location: @team }
       else
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(dom_id(@team),
+            partial: "teams/form",
+            locals: { team: @team })
+        }
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end
@@ -57,7 +78,10 @@ class TeamsController < ApplicationController
     @team.destroy!
 
     respond_to do |format|
-      format.html { redirect_to teams_url, notice: "Team was successfully destroyed." }
+      format.turbo_stream { 
+        render turbo_stream: turbo_stream.remove(@team)
+      }
+      format.html { redirect_to teams_path, status: :see_other, notice: "Team was successfully destroyed." }
       format.json { head :no_content }
     end
   end

@@ -1,2 +1,7 @@
-<%= render "form", team: @team %>
-
+<%= turbo_frame_tag "new_team" do %>
+  <div class="mt-4 mx-auto">
+    <%= render 'shared/card' do %>
+      <%= render "form", team: @team %>
+    <% end %>
+  </div>
+<% end %>

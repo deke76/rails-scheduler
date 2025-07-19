@@ -4,11 +4,17 @@
 
 import { application } from "./application"
 
+import AddressAutocompleteController from "./address_autocomplete_controller"
+application.register("address-autocomplete", AddressAutocompleteController)
+
 import AlertController from "./alert_controller"
 application.register("alert", AlertController)
 
 import ApplicationController from "./application_controller"
 application.register("application", ApplicationController)
+
+import IceTimeSelectorController from "./ice_time_selector_controller"
+application.register("ice-time-selector", IceTimeSelectorController)
 
 import ExampleController from "./example_controller"
 application.register("example", ExampleController)
@@ -16,8 +22,20 @@ application.register("example", ExampleController)
 import FormUploadController from "./form_upload_controller"
 application.register("form-upload", FormUploadController)
 
+import FormController from "./form_controller"
+application.register("form", FormController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
 import NavigationController from "./navigation_controller"
 application.register("navigation", NavigationController)
+
+import AddressController from "./address_controller"
+application.register("address", AddressController)
+
+import TeamController from "./team_controller"
+application.register("team", TeamController)
+
+import FabController from "./fab_controller"
+application.register("fab", FabController)

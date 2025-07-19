@@ -1,7 +1,13 @@
-<div id="<%= dom_id team %>" class="card mb-2">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title"><%= team.name %></h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
+<div id="<%= dom_id(team) %>">
+  <%= turbo_frame_tag dom_id(team) do %>
+    <%= link_to team_path(team), class: "text-decoration-none text-dark" do %>
+      <%= render 'shared/card' do %>
+        <div class="d-flex flex-row align-items-center">
+          <%= image_tag team_logo(team), class: "rounded w-25 mb-2" %>
+          <h5 class="card-title text-center"><%= team.name %></h5>
+        </div>
+        <small class="text-muted text-center d-block"><%= strip_tags(BetterLorem.p(1, false)) %></small>
+      <% end %>
+    <% end %>
+  <% end %>
 </div>

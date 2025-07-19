@@ -10,22 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_01_235003) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_27_032054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "active_storage_attachments", force: :cascade do |t|
+  create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
+    t.uuid "record_id", null: false
+    t.uuid "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", force: :cascade do |t|
+  create_table "active_storage_blobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -37,8 +37,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_01_235003) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+  create_table "active_storage_variant_records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -47,13 +47,30 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_01_235003) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+    t.string "unit_number"
     t.string "street_number"
     t.string "street"
     t.string "city"
-    t.string "country_name"
+    t.string "country"
     t.string "province"
     t.string "postal_code"
-    t.string "unit_number"
+    t.decimal "latitude"
+    t.decimal "longitude"
+  end
+
+  create_table "ice_times", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "day"
+    t.time "start_time"
+    t.integer "length"
+    t.uuid "team_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "address_id", null: false
+    t.uuid "opponent_id"
+    t.index ["address_id"], name: "index_ice_times_on_address_id"
+    t.index ["opponent_id"], name: "index_ice_times_on_opponent_id"
+    t.index ["team_id"], name: "index_ice_times_on_team_id"
+    t.check_constraint "day::text = ANY (ARRAY['monday'::character varying, 'tuesday'::character varying, 'wednesday'::character varying, 'thursday'::character varying, 'friday'::character varying, 'saturday'::character varying, 'sunday'::character varying]::text[])"
   end
 
   create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -88,6 +105,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_01_235003) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "ice_times", "addresses"
+  add_foreign_key "ice_times", "teams"
+  add_foreign_key "ice_times", "teams", column: "opponent_id"
   add_foreign_key "memberships", "teams"
   add_foreign_key "memberships", "users"
 end

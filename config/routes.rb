@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  resources :addresses
-  resources :teams
+  resources :ice_times, :teams
+  resources :addresses do
+    get :autocomplete, on: :collection
+  end
   devise_for :users
 
   resource :example, constraints: -> { Rails.env.development? }

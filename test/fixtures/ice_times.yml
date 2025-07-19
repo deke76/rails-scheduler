@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  day: 
+  ice_time: 2025-02-26 04:23:25
+  length: 1
+  team: one
+
+two:
+  day: 
+  ice_time: 2025-02-26 04:23:25
+  length: 1
+  team: two

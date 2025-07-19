@@ -2,9 +2,9 @@
   width="1.5em"
   height="1.5em"
   fill="currentColor"
-  viewBox="0 0 512 512">
+  viewBox="0 0 100 100">
   
   <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
   
-  <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"/>
+  <path d="M50 0C33.43 0 20 13.43 20 30s13.43 30 30 30 30-13.43 30-30S66.57 0 50 0zM50 45c-8.28 0-15-6.72-15-15s6.72-15 15-15 15 6.72 15 15-6.72 15-15 15zM20 94.14c0-16.57 13.43-30 30-30s30 13.43 30 30c0 3.21-2.59 5.86-5.86 5.86H25.86C22.59 100 20 97.35 20 94.14z"/>
 </svg>

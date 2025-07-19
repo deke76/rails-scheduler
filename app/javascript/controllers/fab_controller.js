@@ -4,11 +4,14 @@ export default class extends Controller {
   connect() {
     // Listen for turbo frame load events
     document.addEventListener("turbo:frame-load", this.handleFrameLoad.bind(this))
+    // Also listen for turbo stream updates
+    document.addEventListener("turbo:stream-render", this.handleStreamRender.bind(this))
   }
 
   disconnect() {
     // Clean up event listener
     document.removeEventListener("turbo:frame-load", this.handleFrameLoad.bind(this))
+    document.removeEventListener("turbo:stream-render", this.handleStreamRender.bind(this))
   }
 
   handleFrameLoad(event) {
@@ -22,6 +25,16 @@ export default class extends Controller {
         this.show()
       }
     }
+  }
+
+  handleStreamRender(event) {
+    // Check if the new_team frame was updated and is now empty
+    setTimeout(() => {
+      const newTeamFrame = document.getElementById("new_team")
+      if (newTeamFrame && !newTeamFrame.innerHTML.trim()) {
+        this.show()
+      }
+    }, 100)
   }
 
   hide() {

@@ -3,6 +3,7 @@
     controller.controller_name.pluralize.to_sym => instance_variable_get("@#{controller.controller_name.pluralize}") %>
 
 <%= link_to send("new_#{controller.controller_name.singularize}_path"), 
+    id: "fab",
     class: "btn btn-primary rounded-circle position-fixed",
     style: "width: 56px; height: 56px; bottom: 80px; right: 1.5rem; opacity: 0.8;",
     data: { 

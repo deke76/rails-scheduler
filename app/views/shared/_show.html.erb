@@ -1,0 +1,28 @@
+<%= turbo_frame_tag dom_id(local_assigns[:record]) do %>
+  <%= render 'shared/card' do %>
+    <%# Header section with optional image %>
+    <% if local_assigns[:image] %>
+      <div class="d-flex flex-row align-items-center">
+        <%= image %>
+        <h5 class="card-title text-center mb-0"><%= title %></h5>
+      </div>
+    <% else %>
+      <div>
+        <h5 class="mb-1"><%= title %></h5>
+      </div>
+    <% end %>
+
+    <%# Content section %>
+    <div>
+      <%= yield %>
+    </div>
+
+    <%# Actions section %>
+    <div class="d-flex justify-content-between mt-3">
+      <%= link_to index_path, class: "btn" do %>
+        <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
+      <% end %>
+      <%= render 'shared/show_actions', record: local_assigns[:record], edit_path: send("edit_#{controller.controller_name.singularize}_path", local_assigns[:record]) %>
+    </div>
+  <% end %>
+<% end %> 

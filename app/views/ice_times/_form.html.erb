@@ -95,10 +95,15 @@
     <%= link_to ice_times_path, class: "btn" do %>
       <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
     <% end %>
-    <div class="form-group">
-      <button type="submit" class="btn">
-        <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
-      </button>
+    <div class="d-flex align-items-center">
+      <div class="form-group me-2">
+        <button type="submit" class="btn">
+          <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
+        </button>
+      </div>
+      <% unless @ice_time.new_record? %>
+        <%= render 'shared/edit_actions', delete_path: ice_time_path(@ice_time) %>
+      <% end %>
     </div>
   </div>
 

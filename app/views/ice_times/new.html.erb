@@ -1,7 +1,3 @@
-<%= turbo_frame_tag "new_ice_time" do %>
-  <div class="mt-4 mx-auto">
-    <%= render 'shared/card' do %>
-      <%= render "form", ice_time: @ice_time %>
-    <% end %>
-  </div>
-<% end %>
+<%= render 'shared/form_container', 
+    frame_id: "new_ice_time",
+    ice_time: @ice_time %>

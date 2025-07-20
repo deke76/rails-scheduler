@@ -1,8 +1,4 @@
-<%= turbo_frame_tag dom_id(@team) do %>
-  <div class="mt-4 mx-auto">
-    <%= render 'shared/card' do %>
-      <%= render "form", team: @team %>
-    <% end %>
-  </div>
-<% end %>
+<%= render 'shared/form_container', 
+    frame_id: dom_id(@team),
+    team: @team %>
 

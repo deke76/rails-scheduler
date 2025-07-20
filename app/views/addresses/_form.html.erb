@@ -46,10 +46,15 @@
           <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
         <% end %>
       <% end %>
-      <div class="form-group">
-        <button type="submit" class="btn">
-          <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
-        </button>
+      <div class="d-flex align-items-center">
+        <div class="form-group me-2">
+          <button type="submit" class="btn">
+            <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
+          </button>
+        </div>
+        <% unless address.new_record? %>
+          <%= render 'shared/edit_actions', delete_path: address_path(address) %>
+        <% end %>
       </div>
     </div>
   </div>

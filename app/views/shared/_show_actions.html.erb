@@ -1,0 +1,7 @@
+<div class="d-flex align-items-center">
+  <%= link_to edit_path, 
+      class: "btn me-0",
+      data: { turbo_frame: dom_id(record) } do %>
+    <%= inline_svg_tag 'edit.svg', class: 'v-100 h-100' %>
+  <% end %>
+</div> 

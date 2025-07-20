@@ -1,13 +1,3 @@
-<%= turbo_frame_tag "new_address" do %>
-  <div class="mt-4 mx-auto">
-    <%= render 'shared/card' do %>
-      <%= render "form", address: @address %>
-    <% end %>
-  </div>
-<% end %>
-
-<br>
-
-<div>
-  <%= link_to "Back to addresses", addresses_path %>
-</div>
+<%= render 'shared/form_container', 
+    frame_id: "new_address",
+    address: @address %>

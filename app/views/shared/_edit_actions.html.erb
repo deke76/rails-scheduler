@@ -1,9 +1,5 @@
 <div class="d-flex align-items-center">
-  <%= link_to edit_team_path(team), 
-      class: "btn me-0" do %>
-    <%= inline_svg_tag 'edit.svg', class: 'v-100 h-100' %>
-  <% end %>
-  <%= button_to team_path(team), 
+  <%= button_to delete_path, 
       method: :delete, 
       class: "btn",
       form: { data: { turbo_confirm: "Are you sure?" } } do %>

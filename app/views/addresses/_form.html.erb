@@ -1,15 +1,6 @@
 <%= bootstrap_form_with(model: address, class: "needs-validation", novalidate: true, data: { turbo: true, controller: "form-actions" }) do |form| %>
   <div data-controller="address-autocomplete">
-    <% if address.errors.any? %>
-      <div class="alert alert-danger">
-        <h4 class="alert-heading"><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h4>
-        <ul>
-          <% address.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+    <%= render 'shared/form_errors', record: address %>
 
     <div class="form-group mb-3">
       <input id="autocomplete" placeholder="Enter your address" type="text" class="form-control" data-address-autocomplete-target="autocomplete" required />
@@ -40,23 +31,9 @@
     <%= form.hidden_field :latitude, data: { address_autocomplete_target: "latitude" } %>
     <%= form.hidden_field :longitude, data: { address_autocomplete_target: "longitude" } %>
 
-    <div class="d-flex justify-content-between">
-      <% if local_assigns[:show_back] != false %>
-        <%= link_to addresses_path, class: "btn" do %>
-          <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
-        <% end %>
-      <% end %>
-      <div class="d-flex align-items-center">
-        <% if address.new_record? %>
-          <div class="form-group">
-            <button type="submit" class="btn">
-              <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
-            </button>
-          </div>
-        <% else %>
-          <%= render 'shared/edit_actions', delete_path: address_path(address) %>
-        <% end %>
-      </div>
-    </div>
+    <%= render 'shared/form_actions', 
+        record: address,
+        index_path: addresses_path,
+        delete_path: address_path(address) %>
   </div>
 <% end %>

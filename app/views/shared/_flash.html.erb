@@ -3,11 +3,13 @@
     <div class="p-2">
       <div class="d-flex align-items-start">
         <div class="ms-3 w-0 flex-grow-1 pt-1">
-          <p class="fs-6 lh-sm">
-            <%= content %>
-          </p>
+          <div class="d-flex align-items-center">
+            <%= flash_icon(level) %>
+            <p class="fs-6 lh-sm ms-2 mb-0">
+              <%= content %>
+            </p>
+          </div>
         </div>
-
       </div>
     </div>
   </div>

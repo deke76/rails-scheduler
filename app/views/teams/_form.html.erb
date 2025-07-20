@@ -1,14 +1,5 @@
 <%= bootstrap_form_with(model: team, data: { turbo: true, controller: "form-actions" }, multipart: true) do |form| %>
-  <% if team.errors.any? %>
-    <div class="alert alert-danger">
-      <h4 class="alert-heading"><%= pluralize(team.errors.count, "error") %> prohibited this team from being saved:</h4>
-      <ul>
-        <% team.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'shared/form_errors', record: team %>
 
   <div class="form-group">
     <div class="d-flex justify-content-start align-items-baseline form-label">
@@ -32,20 +23,8 @@
     <%= form.file_field :logo %>
   </div>
 
-  <div class="d-flex justify-content-between mt-3">
-    <%= link_to teams_path, class: "btn" do %>
-      <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
-    <% end %>
-    <div class="d-flex align-items-center">
-      <% if team.new_record? %>
-        <div class="form-group">
-          <button type="submit" class="btn">
-            <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
-          </button>
-        </div>
-      <% else %>
-        <%= render 'shared/edit_actions', delete_path: team_path(team) %>
-      <% end %>
-    </div>
-  </div>
+  <%= render 'shared/form_actions', 
+      record: team,
+      index_path: teams_path,
+      delete_path: team_path(team) %>
 <% end %>

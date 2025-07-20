@@ -1,9 +1,5 @@
 <%= turbo_frame_tag "addresses" do %>
   <% addresses.each do |address| %>
-    <%= turbo_frame_tag dom_id(address) do %>
-      <%= link_to address, class: "text-decoration-none" do %>
-        <%= render address %>
-      <% end %>
-    <% end %>
+    <%= render "addresses/address", address: address %>
   <% end %>
 <% end %> 

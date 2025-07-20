@@ -1,11 +1,17 @@
 <div class="d-flex justify-content-between mt-3">
-  <% puts "back_path: #{}" %>
-  <%= link_to ice_times_path, class: "btn" do %>
+  <%= link_to index_path, class: "btn" do %>
     <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
   <% end %>
-  <div class="form-group">
-    <button type="submit" class="btn">
-      <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
-    </button>
+  
+  <div class="d-flex align-items-center">
+    <% if record.new_record? %>
+      <div class="form-group">
+        <button type="submit" class="btn">
+          <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
+        </button>
+      </div>
+    <% else %>
+      <%= render 'shared/edit_actions', delete_path: delete_path %>
+    <% end %>
   </div>
 </div>

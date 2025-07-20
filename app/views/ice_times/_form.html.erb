@@ -3,16 +3,7 @@
   controller: "form-actions",
   action: "turbo:submit-start->form#handleSubmit"
 }) do |form| %>
-  <% if @ice_time.errors.any? %>
-    <div class="alert alert-danger">
-      <h4 class="alert-heading"><%= pluralize(@ice_time.errors.count, "error") %> prohibited this ice time from being saved:</h4>
-      <ul>
-        <% @ice_time.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'shared/form_errors', record: @ice_time %>
     
   <div data-controller="ice-time-selector">
     <div class="form-group mb-3">
@@ -92,21 +83,9 @@
 
   </div>
 
-  <div class="d-flex justify-content-between mt-3">
-    <%= link_to ice_times_path, class: "btn" do %>
-      <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
-    <% end %>
-    <div class="d-flex align-items-center">
-      <% if @ice_time.new_record? %>
-        <div class="form-group">
-          <button type="submit" class="btn">
-            <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
-          </button>
-        </div>
-      <% else %>
-        <%= render 'shared/edit_actions', delete_path: ice_time_path(@ice_time) %>
-      <% end %>
-    </div>
-  </div>
+  <%= render 'shared/form_actions', 
+      record: @ice_time,
+      index_path: ice_times_path,
+      delete_path: ice_time_path(@ice_time) %>
 
 <% end %>

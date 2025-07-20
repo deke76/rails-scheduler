@@ -32,4 +32,26 @@ module ApplicationHelper
   def nav_active?(controller_name)
     controller.controller_name == controller_name.to_s
   end
+
+  def flash_level_to_bootstrap_class(level)
+    case level
+    when 'notice' then 'success'
+    when 'alert' then 'danger'
+    when 'warning' then 'warning'
+    when 'info' then 'info'
+    else level
+    end
+  end
+
+  def flash_icon(level)
+    icon_class = case level
+    when 'notice' then 'check-circle'
+    when 'alert' then 'exclamation-triangle'
+    when 'warning' then 'exclamation-circle'
+    when 'info' then 'info-circle'
+    else 'info-circle'
+    end
+    
+    content_tag(:i, '', class: "bi bi-#{icon_class}")
+  end
 end

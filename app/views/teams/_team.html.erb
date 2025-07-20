@@ -1,13 +1,14 @@
-<div id="<%= dom_id(team) %>">
-  <%= turbo_frame_tag dom_id(team) do %>
-    <%= link_to team_path(team), class: "text-decoration-none text-dark" do %>
-      <%= render 'shared/card' do %>
-        <div class="d-flex flex-row align-items-center">
+<%= turbo_frame_tag dom_id(team) do %>
+  <%= link_to team_path(team), class: "text-decoration-none text-dark" do %>
+    <%= render 'shared/card' do %>
+      <div class="d-flex flex-row align-items-center">
+        <div>
           <%= image_tag team_logo(team), class: "rounded w-25 mb-2 team-logo" %>
+        </div>
+        <div>
           <h5 class="card-title text-center"><%= team.name %></h5>
         </div>
-        <small class="text-muted text-center d-block"><%= strip_tags(BetterLorem.p(1, false)) %></small>
-      <% end %>
+      </div>
     <% end %>
   <% end %>
-</div>
+<% end %>

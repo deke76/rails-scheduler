@@ -1,8 +1,17 @@
 <div class="d-flex align-items-center">
+  <%# Delete button (shown by default) %>
   <%= button_to delete_path, 
       method: :delete, 
       class: "btn",
-      form: { data: { turbo_confirm: "Are you sure?" } } do %>
+      form: { data: { turbo_confirm: "Are you sure?" } },
+      data: { form_actions_target: "deleteButton" } do %>
     <%= inline_svg_tag 'trash.svg', class: 'v-100 h-100' %>
   <% end %>
+  
+  <%# Save button (hidden by default) %>
+  <button type="submit" 
+      class="btn d-none" 
+      data-form-actions-target="saveButton">
+    <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
+  </button>
 </div> 

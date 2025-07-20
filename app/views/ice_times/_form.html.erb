@@ -1,5 +1,6 @@
 <%= bootstrap_form_with(model: @ice_time, data: { 
   turbo: true,
+  controller: "form-actions",
   action: "turbo:submit-start->form#handleSubmit"
 }) do |form| %>
   <% if @ice_time.errors.any? %>
@@ -96,12 +97,13 @@
       <%= inline_svg_tag 'arrow-left.svg', class: 'v-100 h-100' %>
     <% end %>
     <div class="d-flex align-items-center">
-      <div class="form-group me-2">
-        <button type="submit" class="btn">
-          <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
-        </button>
-      </div>
-      <% unless @ice_time.new_record? %>
+      <% if @ice_time.new_record? %>
+        <div class="form-group">
+          <button type="submit" class="btn">
+            <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
+          </button>
+        </div>
+      <% else %>
         <%= render 'shared/edit_actions', delete_path: ice_time_path(@ice_time) %>
       <% end %>
     </div>

@@ -1,4 +1,4 @@
-<%= bootstrap_form_with(model: address, class: "needs-validation", novalidate: true, data: { turbo: true }) do |form| %>
+<%= bootstrap_form_with(model: address, class: "needs-validation", novalidate: true, data: { turbo: true, controller: "form-actions" }) do |form| %>
   <div data-controller="address-autocomplete">
     <% if address.errors.any? %>
       <div class="alert alert-danger">
@@ -47,12 +47,13 @@
         <% end %>
       <% end %>
       <div class="d-flex align-items-center">
-        <div class="form-group me-2">
-          <button type="submit" class="btn">
-            <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
-          </button>
-        </div>
-        <% unless address.new_record? %>
+        <% if address.new_record? %>
+          <div class="form-group">
+            <button type="submit" class="btn">
+              <%= inline_svg_tag 'check-lg.svg', class: 'v-100 h-100' %>
+            </button>
+          </div>
+        <% else %>
           <%= render 'shared/edit_actions', delete_path: address_path(address) %>
         <% end %>
       </div>

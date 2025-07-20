@@ -1,11 +1,11 @@
 <%= turbo_frame_tag "new_#{controller.controller_name.singularize}" %>
+
 <%= render "#{controller.controller_name}/#{controller.controller_name}", 
     controller.controller_name.pluralize.to_sym => instance_variable_get("@#{controller.controller_name.pluralize}") %>
 
 <%= link_to send("new_#{controller.controller_name.singularize}_path"), 
     id: "fab",
-    class: "btn btn-primary rounded-circle position-fixed d-flex align-items-center justify-content-center",
-    style: "width: 56px; height: 56px; bottom: 80px; right: 1.5rem; opacity: 0.8; font-size: 24px; font-weight: bold;",
+    class: "btn btn-primary rounded-circle position-fixed d-flex align-items-center justify-content-center fab",
     data: { 
       turbo_frame: "new_#{controller.controller_name.singularize}",
       action: "click->fab#hide",

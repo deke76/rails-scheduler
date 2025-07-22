@@ -1,9 +1,11 @@
 .fab {
+  position: fixed;
   width: 56px;
   height: 56px;
-  bottom: 1.5rem;
+  bottom: 2rem;
   right: 1.5rem;
   opacity: 0.8;
   font-size: 24px;
   font-weight: bold;
+  z-index: 1000;
 } 

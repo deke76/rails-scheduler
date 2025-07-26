@@ -26,5 +26,5 @@
   <%= render 'shared/form_actions', 
       record: team,
       index_path: teams_path,
-      delete_path: team_path(team) %>
+      delete_path: team.persisted? ? team_path(team) : nil %>
 <% end %>

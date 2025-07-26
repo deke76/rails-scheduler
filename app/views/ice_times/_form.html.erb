@@ -86,6 +86,6 @@
   <%= render 'shared/form_actions', 
       record: @ice_time,
       index_path: ice_times_path,
-      delete_path: ice_time_path(@ice_time) %>
+      delete_path: @ice_time.persisted? ? ice_time_path(@ice_time) : nil %>
 
 <% end %>

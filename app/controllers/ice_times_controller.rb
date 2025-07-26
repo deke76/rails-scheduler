@@ -4,6 +4,7 @@ class IceTimesController < ApplicationController
   # GET /ice_times or /ice_times.json
   def index
     @ice_times = IceTime.all
+    render 'shared/index'
   end
 
   # GET /ice_times/1 or /ice_times/1.json

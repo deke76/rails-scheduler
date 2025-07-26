@@ -1,7 +1,10 @@
 <%= turbo_frame_tag "new_#{controller.controller_name.singularize}" %>
 
-<%= render "#{controller.controller_name}/#{controller.controller_name}", 
-    controller.controller_name.pluralize.to_sym => instance_variable_get("@#{controller.controller_name.pluralize}") %>
+<div id="<%= controller.controller_name.pluralize %>">
+  <% instance_variable_get("@#{controller.controller_name.pluralize}").each do |item| %>
+    <%= render "#{controller.controller_name}/#{controller.controller_name.singularize}", controller.controller_name.singularize.to_sym => item %>
+  <% end %>
+</div>
 
 <%= link_to send("new_#{controller.controller_name.singularize}_path"), 
     id: "fab",

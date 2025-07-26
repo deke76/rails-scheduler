@@ -1,13 +1,12 @@
 <%= turbo_frame_tag dom_id(team) do %>
   <%= link_to team_path(team), class: "text-decoration-none text-dark" do %>
     <%= render 'shared/card' do %>
-      <div class="d-flex flex-column align-items-center">
-        <div class="text-center flex-fill">
-          <%= image_tag team.logo.variant(resize_to_limit: [150, 150]), class: "rounded w-75 mb-2 team-logo" %>
+      <div class="d-flex flex-row align-items-center">
+        <div>
+          <%= image_tag team_logo(team), class: "rounded w-25 mb-2 team-logo" %>
         </div>
-        <div class="text-center flex-fill">
+        <div>
           <h5 class="card-title text-center"><%= team.name %></h5>
-          Record
         </div>
       </div>
     <% end %>
